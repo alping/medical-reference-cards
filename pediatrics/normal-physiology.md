@@ -1,6 +1,5 @@
 Pediatrics
 ==========
-Size: A6
 Last edited: 160210
 Last reviewed: 160210
 
