@@ -1,2 +1,2 @@
-# medical-reference-cards
+# Medical reference cards.
 Medical reference cards.
