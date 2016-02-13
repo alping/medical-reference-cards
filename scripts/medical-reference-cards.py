@@ -19,6 +19,11 @@ DOCUMENT_DIM = (FACE_DIM[0]*2, FACE_DIM[1])
 # Size of keyring cut-out (radius)
 KEY_RING_RAD = 1.2*cm
 
+# Outer rounded egdes radius
+OUTER_ROUNDED_RAD = 0.5*cm
+# Outer rounded egdes radius
+INNER_ROUNDED_RAD = 0.2*cm
+
 ## Static text setup
 FOOTER_TEXT = "github.com/alping/medical-reference-cards"
 
@@ -41,11 +46,11 @@ def create_card(c, header_front, header_back, quote="", frame_colour=(0.2,0.5,0.
 def create_front_face(c, header_text, footer_text, frame_colour, content_pdf_fn):
 	# Colour frame
 	c.setFillColorRGB(frame_colour[0], frame_colour[1], frame_colour[2])
-	c.rect(0, 0, FACE_DIM[0], FACE_DIM[1], stroke=0, fill=1)
+	c.roundRect(0, 0, FACE_DIM[0], FACE_DIM[1], radius=OUTER_ROUNDED_RAD, stroke=0, fill=1)
 
 	# Content space
 	c.setFillColorRGB(1, 1, 1)
-	c.rect(FACE_MARGINS[3], FACE_MARGINS[2], CONTENT_DIM[0], CONTENT_DIM[1], stroke=0, fill=1)
+	c.roundRect(FACE_MARGINS[3], FACE_MARGINS[2], CONTENT_DIM[0], CONTENT_DIM[1], radius=INNER_ROUNDED_RAD, stroke=0, fill=1)
 
 	# Keyring cut-out, upper left/right corner, depending on page side
 	c.circle(0, DOCUMENT_DIM[1], KEY_RING_RAD, stroke=0, fill=1)
@@ -69,11 +74,11 @@ def create_front_face(c, header_text, footer_text, frame_colour, content_pdf_fn)
 def create_back_face(c, header_text, footer_text, frame_colour, content_pdf_fn):
 	# Colour frame
 	c.setFillColorRGB(frame_colour[0], frame_colour[1], frame_colour[2])
-	c.rect(FACE_DIM[0], 0, FACE_DIM[0], FACE_DIM[1], stroke=0, fill=1)
+	c.roundRect(FACE_DIM[0], 0, FACE_DIM[0], FACE_DIM[1], radius=OUTER_ROUNDED_RAD, stroke=0, fill=1)
 
 	# Content space
 	c.setFillColorRGB(1, 1, 1)
-	c.rect(FACE_DIM[0] + FACE_MARGINS[3], FACE_MARGINS[2], CONTENT_DIM[0], CONTENT_DIM[1], stroke=0, fill=1)
+	c.roundRect(FACE_DIM[0] + FACE_MARGINS[3], FACE_MARGINS[2], CONTENT_DIM[0], CONTENT_DIM[1], radius=INNER_ROUNDED_RAD, stroke=0, fill=1)
 
 	# Keyring cut-out, upper left/right corner, depending on page side
 	c.circle(DOCUMENT_DIM[0], DOCUMENT_DIM[1], KEY_RING_RAD, stroke=0, fill=1)
