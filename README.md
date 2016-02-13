@@ -12,8 +12,8 @@ Contributing is easy! You just need to create one pdf file for the front and one
 ### The building blocks of a card
 - Each card has a front and back face.
 - Each face has a coloured frame, a heading, a content area, and a footer
-- The dimensions of a folded card are 104mm x 165mm
-- The dimensions of the content area are 100mm x 140mm
+- The dimensions of a folded card are 105mm x 150mm
+- The dimensions of the content area are 100mm x 130mm
 - The meta-data for each card are stored in a .yaml file
 - The content for each card is stored in a separate pdf file for each face
 - The cards are outputted to a pdf file by running the python script `medical-reference-cards.py`
@@ -47,8 +47,8 @@ header_back: 'Normal Physiology'
 ```
 For more info on YAML, see http://yaml.org/
 
-### Dimension of .pdf files
-- The dimensions should be 100mm x 140mm (width x height)
+### Dimension of content .pdf files
+- The dimensions should be 100mm x 130mm (width x height)
 
 ## Contributors
 Peter - Medical student, Karolinska Institutet, Sweden
