@@ -147,7 +147,8 @@ def create_card_face(c, domain, category, header_text, footer_text, frame_colour
 
 	# Domain / Caetgory text
 	c.setFont('Helvetica', 10, leading = None)
-	c.drawCentredString(FACE_DIM[0]/2 + offset, FACE_DIM[1] - 0.47*cm, domain.title() + ' / ' + category.title())
+	c.drawCentredString(FACE_DIM[0]/2 + offset, FACE_DIM[1] - 0.47*cm, '- ' + domain.title() + ' -')
+	# c.drawCentredString(FACE_DIM[0]/2 + offset, FACE_DIM[1] - 0.47*cm, domain.title() + ' / ' + category.title())
 
 	# Header text
 	c.setFont('Helvetica-Bold', 20, leading = None)
