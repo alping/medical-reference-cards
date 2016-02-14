@@ -1,3 +1,22 @@
+# Short script that compiles a deck of reference cards for use in medical care
+# Copyright (C) 2016 Peter Alping
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# Peter Alping
+# peter@alping.se
+
 # Used for finding all the yaml files corresponding to the cards in the content folder
 import os, fnmatch, re
 
@@ -128,11 +147,11 @@ def create_card_face(c, domain, category, header_text, footer_text, frame_colour
 
 	# Domain / Caetgory text
 	c.setFont('Helvetica', 10, leading = None)
-	c.drawCentredString(FACE_DIM[0]/2 + offset, FACE_DIM[1] - 0.45*cm, domain.title() + ' / ' + category.title())
+	c.drawCentredString(FACE_DIM[0]/2 + offset, FACE_DIM[1] - 0.47*cm, domain.title() + ' / ' + category.title())
 
 	# Header text
-	c.setFont('Helvetica-Bold', 22, leading = None)
-	c.drawCentredString(FACE_DIM[0]/2 + offset, FACE_DIM[1] - 1.24*cm, header_text)
+	c.setFont('Helvetica-Bold', 20, leading = None)
+	c.drawCentredString(FACE_DIM[0]/2 + offset, FACE_DIM[1] - 1.23*cm, header_text)
 
 	# Footer text
 	c.setFont('Helvetica', 8, leading = None)

@@ -51,4 +51,4 @@ For more info on YAML, see http://yaml.org/
 - The dimensions should be 100mm x 130mm (width x height)
 
 ## Contributors
-Peter - Medical student, Karolinska Institutet, Sweden
+Peter Alping (peter@alping.se) - Medical student, Karolinska Institutet, Sweden
