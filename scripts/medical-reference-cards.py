@@ -49,7 +49,7 @@ def yaml_dump(filepath, data):
 # Output file path
 OUTPUT_FN = '../pdf/medical-reference-cards.pdf'
 # Content file path
-CONTENT_PATH = '../content'
+CONTENT_PATH = '../contents'
 
 ## Domain colour codes
 DOMAIN_COLOURS_FN = '../formatting/domain-colours.yml'
@@ -117,7 +117,7 @@ def generate_deck(output='print'):
 	
 	c.save()
 
-	return('Deck generated successfully. Number of cards: 1.')
+	return('Deck generated successfully. Number of cards: ' + str(len(cards)))
 
 def create_print_card(c, path, handle, domain, category, header_front, header_back, footer_front, footer_back):
 	create_card_face(c, domain, category, header_front, FOOTER_TEXT, COLOURS[domain], path + handle + '-front.pdf')

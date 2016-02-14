@@ -7,7 +7,7 @@ This is a collection of reference cards for the use in medical practice. These c
 The cards can either be downloaded directly from the pdf folder or built from source using the python script `medical-reference-cards.py`
 
 ## Instructions for contributors
-Contributing is easy! You just need to create one pdf file for the front and one for the back of the card, and then fill in some information in a text file (.yaml). See below for more detailed instructions.
+Contributing is easy! You just need to create one pdf file for the front and one for the back of the card (you can use the Word template), and then fill in some information in a text file (.yaml). See below for more detailed instructions.
 
 ### The building blocks of a card
 - Each card has a front and back face.
