@@ -1,18 +1,25 @@
-# Card
+## Card ########################
 domain: 'general'
 category: 'general'
 
-#Front
-front_header: 'C-ABCDE'
-front_footer: ''
-front_references: ''
-
-# Back
-back_header: 'SBAR'
-back_footer: ''
-back_references: ''
-
-# Metadata
-modified_date: ''
+modified_date: '160215'
 verified_date: ''
 verified_by: ''
+
+## Front #######################
+front_header: 'C-ABCDE'
+front_footer: ''
+
+front_toc:
+  - 'C-ABCDE'
+front_references:
+  - 'On call anesthesiologist at Huddinge hospital'
+
+## Back ########################
+back_header: 'SBAR'
+back_footer: ''
+
+back_toc:
+  - 'SBAR'
+back_references:
+  - 'Nätverket för patientsäkerhet, Sweden'

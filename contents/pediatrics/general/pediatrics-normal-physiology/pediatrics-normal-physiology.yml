@@ -1,18 +1,29 @@
-# Card
+## Card ########################
 domain: 'pediatrics'
 category: 'general'
 
-#Front
-front_header: 'Normal Physiology'
-front_footer: ''
-front_references: ''
-
-# Back
-back_header: 'Normal Physiology'
-back_footer: ''
-back_references: ''
-
-# Metadata
-modified_date: ''
+modified_date: '160215'
 verified_date: ''
 verified_by: ''
+
+## Front #######################
+front_header: 'Normal Physiology'
+front_footer: ''
+
+front_toc:
+  - 'Vital signs, by age'
+  - 'Average weight and length, by age'
+  - 'Weight gain per week, by age'
+  - 'Estimated fluid needs, by weight'
+  - 'Urine production and definition of oliguri, by weight'
+front_references:
+  - 'Pediatric course booklet, Pediatrics course, Karolinska Hospital, Solna, Sweden'
+
+## Back ########################
+back_header: 'Normal Physiology'
+back_footer: ''
+
+back_toc:
+  - 'Developmental milestones (gross motor, fine motor, and cognitive and communicative skills), by age'
+back_references:
+  - 'Pediatric course booklet, Pediatrics course, Karolinska Hospital, Solna, Sweden'

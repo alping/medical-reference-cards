@@ -125,12 +125,7 @@ class MedRefCards():
 	def generate_deck(self, card_filter='all', content_path='../contents'):
 		self.med_ref_deck = MedRefDeck(card_filter, content_path)
 
-	def generate_pdf(self, output='print', colour_scheme='default', frame_layout='default', output_folder='../pdf'):
-		## Output type check
-		if not any(output in s for s in {'print', 'screen'}):
-			logging.warning('No output: ' + output + '. Using output: print.')
-			output = 'print'
-
+	def generate_pdf(self, spread=True, colour_scheme='default', frame_layout='default', output_folder='../pdf'):
 		## Colour scheme check
 		colour_scheme_path = os.path.join('../theme/colour-schemes', colour_scheme + '.yml')
 		if not os.path.isfile(colour_scheme_path):
@@ -143,18 +138,24 @@ class MedRefCards():
 			logging.warning('No frame layout: ' + frame_layout + '. Using frame layout: default.')
 			frame_layout_path = '../theme/frame-layouts/default.yml'
 
-		output_fn = 'medical-reference-cards' + '-' + output + '.pdf'
+		if spread:
+			output_fn = 'medical-reference-cards' + '-spread'
+		else:
+			output_fn = 'medical-reference-cards' + '-page'
+
+		output_fn = output_fn + '-' + frame_layout + '.pdf'
+
 		output_path = os.path.join(output_folder, output_fn)
 
 		colour_scheme = yaml_loader(colour_scheme_path)
 		frame_layout = self.set_frame_layout(yaml_loader(frame_layout_path))
 
-		if output == 'print':
+		if spread:
 			canvas_size = (frame_layout['card_spread']['width']*cm, frame_layout['card_spread']['height']*cm)
-			draw_card = self.draw_card_print
-		elif output == 'screen':
+			draw_card = self.draw_card_spread
+		else:
 			draw_size = canvas_size = (frame_layout['card']['width']*cm, frame_layout['card']['height']*cm)
-			draw_card = self.draw_card_screen
+			draw_card = self.draw_card_page
 
 		c = canvas.Canvas(output_path, canvas_size)
 
@@ -176,18 +177,18 @@ class MedRefCards():
 
 		return frame_layout
 
-	def draw_card_print(self, c, card, colour_scheme, frame_layout):
-		self.draw_card_face(c, card.front_face, card.domain, colour_scheme, frame_layout, 0, 1)
-		self.draw_card_face(c, card.back_face, card.domain, colour_scheme, frame_layout, frame_layout['card']['width']*cm, 2)
+	def draw_card_spread(self, c, card, colour_scheme, frame_layout):
+		self.draw_card_face(c, card.front_face, card.domain, colour_scheme, frame_layout, 1)
+		self.draw_card_face(c, card.back_face, card.domain, colour_scheme, frame_layout, 2, frame_layout['card']['width']*cm)
 		c.showPage()
 
-	def draw_card_screen(self, c, card, colour_scheme, frame_layout):
-		self.draw_card_face(c, card.front_face, card.domain, colour_scheme, frame_layout, 0, 0)
+	def draw_card_page(self, c, card, colour_scheme, frame_layout):
+		self.draw_card_face(c, card.front_face, card.domain, colour_scheme, frame_layout, 1)
 		c.showPage()
-		self.draw_card_face(c, card.back_face, card.domain, colour_scheme, frame_layout, 0, 0)
+		self.draw_card_face(c, card.back_face, card.domain, colour_scheme, frame_layout, 2)
 		c.showPage()
 
-	def draw_card_face(self, c, card_face, domain, colour_scheme, frame_layout, offset, key_ring):
+	def draw_card_face(self, c, card_face, domain, colour_scheme, frame_layout, page_nr, offset = 0):
 		colour = colour_scheme[domain]
 
 		# Colour frame
@@ -199,9 +200,9 @@ class MedRefCards():
 		c.roundRect(frame_layout['border']['left']*cm + offset, frame_layout['border']['bottom']*cm, frame_layout['content']['width']*cm, frame_layout['content']['height']*cm, radius=frame_layout['border']['inner_corner_radius']*cm, stroke=0, fill=1)
 
 		# Key ring cut-out: 0 = none, 1 = top left, 2 = top right
-		if key_ring == 1:
+		if page_nr == 1:
 			c.circle(0, frame_layout['card_spread']['height']*cm, frame_layout['key_ring']['radius']*cm, stroke=0, fill=1)
-		elif key_ring == 2:
+		elif page_nr == 2:
 			c.circle(frame_layout['card_spread']['width']*cm, frame_layout['card_spread']['height']*cm, frame_layout['key_ring']['radius']*cm, stroke=0, fill=1)
 
 		# Domain / Caetgory text
@@ -212,6 +213,10 @@ class MedRefCards():
 		c.setFont('Helvetica-Bold', 20, leading = None)
 		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, frame_layout['card']['height']*cm - 1.23*cm, card_face.header)
 
+		# Footer text
+		c.setFont('Helvetica', 8, leading = None)
+		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, 0.15*cm, frame_layout['static_text']['footer'])
+
 		# Include contents
 		c.setFillColorRGB(0, 0, 0)
 		page = pagexobj(PdfReader(card_face.content_path).pages[0])
@@ -219,13 +224,10 @@ class MedRefCards():
 		c.translate(frame_layout['border']['left']*cm + offset, frame_layout['border']['bottom']*cm)
 		c.doForm(makerl(c, page))
 		c.restoreState()
-		# Footer text
 
-		c.setFont('Helvetica', 8, leading = None)
-		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, 0.15*cm, card_face.footer)
 
 if __name__ == '__main__':
 	med_ref_cards = MedRefCards()
 	med_ref_cards.generate_deck()
-	med_ref_cards.generate_pdf(output='print', output_folder='../pdf/print')
-	med_ref_cards.generate_pdf(output='screen', output_folder='../pdf/screen')
+	med_ref_cards.generate_pdf(spread=True, frame_layout='print', output_folder='../pdf/print')
+	med_ref_cards.generate_pdf(spread=False, frame_layout='screen', output_folder='../pdf/screen')
