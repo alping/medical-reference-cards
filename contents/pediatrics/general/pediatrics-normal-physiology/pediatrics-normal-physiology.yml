@@ -1,6 +1,18 @@
+# Card
 domain: 'pediatrics'
 category: 'general'
-header_front: 'Normal Physiology'
-header_back: 'Normal Physiology'
-footer_front: ''
-footer_back: ''
+
+#Front
+front_header: 'Normal Physiology'
+front_footer: ''
+front_references: ''
+
+# Back
+back_header: 'Normal Physiology'
+back_footer: ''
+back_references: ''
+
+# Metadata
+modified_date: ''
+verified_date: ''
+verified_by: ''

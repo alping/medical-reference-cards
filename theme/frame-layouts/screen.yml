@@ -1,0 +1,21 @@
+#####################################################
+## Default frame layout #############################
+#####################################################
+
+## Dimensions in cm #################################
+content:
+  width: 10
+  height: 13
+border:
+  top: 1.5
+  right: 0.25
+  bottom: 0.5
+  left: 0.25
+  outer_corner_radius: 0
+  inner_corner_radius: 0
+key_ring:
+  radius: 0  
+
+## Static text values ###############################
+static_text:
+  footer: github.com/alping/medical-reference-cards

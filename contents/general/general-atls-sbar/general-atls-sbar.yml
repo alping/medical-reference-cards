@@ -1,6 +1,18 @@
+# Card
 domain: 'general'
 category: 'general'
-header_front: 'C-ABCDE'
-header_back: 'SBAR'
-footer_front: ''
-footer_back: ''
+
+#Front
+front_header: 'C-ABCDE'
+front_footer: ''
+front_references: ''
+
+# Back
+back_header: 'SBAR'
+back_footer: ''
+back_references: ''
+
+# Metadata
+modified_date: ''
+verified_date: ''
+verified_by: ''
