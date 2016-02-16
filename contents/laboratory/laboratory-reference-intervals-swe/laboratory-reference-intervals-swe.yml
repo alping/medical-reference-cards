@@ -1,0 +1,27 @@
+## Card ########################
+domain: 'laboratory'
+category: 'general'
+
+modified_date: '160216'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'Lab reference (Swe)'
+front_footer: ''
+
+front_toc:
+  - 'Laboratory reference intervals'
+front_references:
+  - 'NORIS'
+  - 'http://www.equalis.se/sv/vaar-verksamhet/projekt/nordiska-referensintervallprojektet'
+
+## Back ########################
+back_header: 'Lab reference (Swe)'
+back_footer: ''
+
+back_toc:
+  - 'Laboratory reference intervals'
+back_references:
+  - 'NORIS'
+  - 'http://www.equalis.se/sv/vaar-verksamhet/projekt/nordiska-referensintervallprojektet'

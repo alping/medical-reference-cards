@@ -180,15 +180,43 @@ class MedRefCards():
 
 		return frame_layout
 
+	def add_toc_item(self, c, title, key, level=0, closed=None):
+		c.bookmarkPage(key)
+		c.addOutlineEntry(title, key, level, closed)
+
+	def draw_front_page(self, c, width, height):
+		title_text = 'Medical Reference Cards'
+		subtitle_text = 'github.com/alping/medical-reference-cards'
+
+		c.setFillColorRGB(0, 0, 0)
+
+		# Draw title
+		c.setFont('Helvetica-Bold', 20, leading = None)
+		c.drawCentredString(width/2, height - 4*cm, title_text)
+
+		# Draw subtitle
+		c.setFont('Helvetica-Bold', 8, leading = None)
+		c.drawCentredString(width/2, height - 4.5*cm, subtitle_text)
+
+		self.add_toc_item(c, 'Medical Reference Cards', 'medical-reference-cards', 0)
+
+		c.showPage()
+
 	def draw_card_spread(self, c, card, colour_scheme, frame_layout):
 		self.draw_card_face(c, card.front_face, card.domain, colour_scheme, frame_layout, 1)
 		self.draw_card_face(c, card.back_face, card.domain, colour_scheme, frame_layout, 2, frame_layout['card']['width']*cm)
+		self.add_toc_item(c, card.front_face.header + ' / ' + card.back_face.header, card.front_face.header + '-' + card.back_face.header, 1)
 		c.showPage()
 
 	def draw_card_page(self, c, card, colour_scheme, frame_layout):
+		self.add_toc_item(c, card.front_face.header + ' / ' + card.back_face.header, card.front_face.header + '-' + card.back_face.header, 1, True)
+
 		self.draw_card_face(c, card.front_face, card.domain, colour_scheme, frame_layout, 1)
+		self.add_toc_item(c, card.front_face.header, card.front_face.header, 2)
 		c.showPage()
+
 		self.draw_card_face(c, card.back_face, card.domain, colour_scheme, frame_layout, 2)
+		self.add_toc_item(c, card.back_face.header, card.back_face.header, 2)
 		c.showPage()
 
 	def draw_card_face(self, c, card_face, domain, colour_scheme, frame_layout, page_nr, offset = 0):
@@ -227,22 +255,6 @@ class MedRefCards():
 		c.translate(frame_layout['border']['left']*cm + offset, frame_layout['border']['bottom']*cm)
 		c.doForm(makerl(c, page))
 		c.restoreState()
-
-	def draw_front_page(self, c, width, height):
-		title_text = 'Medical Reference Cards'
-		subtitle_text = 'github.com/alping/medical-reference-cards'
-
-		c.setFillColorRGB(0, 0, 0)
-
-		# Draw title
-		c.setFont('Helvetica-Bold', 20, leading = None)
-		c.drawCentredString(width/2, height - 4*cm, title_text)
-
-		# Draw subtitle
-		c.setFont('Helvetica-Bold', 8, leading = None)
-		c.drawCentredString(width/2, height - 4.5*cm, subtitle_text)
-
-		c.showPage()
 
 
 if __name__ == '__main__':

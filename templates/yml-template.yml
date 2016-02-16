@@ -1,0 +1,25 @@
+## Card ########################
+domain: ''
+category: ''
+
+modified_date: ''
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: ''
+front_footer: ''
+
+front_toc:
+  - ''
+front_references:
+  - ''
+
+## Back ########################
+back_header: ''
+back_footer: ''
+
+back_toc:
+  - ''
+back_references:
+  - ''
