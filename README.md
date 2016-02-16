@@ -7,7 +7,7 @@ This is a collection of reference cards for the use in medical practice. These c
 The cards can either be downloaded directly from the [pdf folder](pdf "pdf folder") in this repository, or built from source using the python script `medical-reference-cards.py` in the [scripts folder](scripts "scripts folder").
 
 ## Brief instructions for contributors
-Contributing is easy! You just need to create one pdf file for the front and one for the back of the card (you can use the [Word template](templates/word-content-template.dotx "Word template")), and then fill in some information in a [text file (.yml)](#structure-of-yml-file). See below for more detailed instructions.
+Contributing is easy! You just need to create one pdf file for the front and one for the back of the card (you can use the [Word template](templates/word-content-template.dotx "Word template")), and then fill in some information in a [text file](templates/card-description-template.yml "Card description template") (see also the [example below](#structure-of-yml-file)), and then your done! Well almost, you also have to submit your new cards to the repository, either by sending me an email or by using the git way. Thank you for your contribution!
 
 ## Detailed instructions for contributors
 
