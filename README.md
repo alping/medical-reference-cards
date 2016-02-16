@@ -2,12 +2,14 @@
 This is an effort to create a series of reference cards, usable to anyone involved in health care and medicine. This is a free and open source project (GNU-GPL), and as such you are at liberty to use the resources here pretty much as you wish (see the LICENCE). However, this is very much a work in progress and no guarantee for the correctness or completeness of these cards can be given. Use these cards at your own risk. With that said, the goal for this project is to provide an accurate, usable, and expandable collection of reference cards. Please feel free to contribute!
 
 ## Usage
-This is a collection of reference cards for the use in medical practice. These cards are designed to be printed, folded, laminated, and put on a key ring.
+This is a collection of reference cards for the use in medical practice. These cards are designed to be [printed, folded, laminated, and put on a key ring](pdf/print "print folder"), or to be [viewed on a screen](pdf/screen "screen folder"), of for example a phone or tablet.
 
-The cards can either be downloaded directly from the pdf folder or built from source using the python script `medical-reference-cards.py`
+The cards can either be downloaded directly from the [pdf folder](pdf "pdf folder") in this repository, or built from source using the python script `medical-reference-cards.py` in the [scripts folder](scripts "scripts folder").
 
-## Instructions for contributors
-Contributing is easy! You just need to create one pdf file for the front and one for the back of the card (you can use the Word template), and then fill in some information in a text file (.yaml). See below for more detailed instructions.
+## Brief instructions for contributors
+Contributing is easy! You just need to create one pdf file for the front and one for the back of the card (you can use the [Word template](templates/word-content-template.dotx "Word template")), and then fill in some information in a [text file (.yml)](medical-reference-cards#structure-of-yaml-file). See below for more detailed instructions.
+
+## Detailed instructions for contributors
 
 ### The building blocks of a card
 - Each card has a front and back face.
@@ -35,15 +37,37 @@ For filenames use:
         + `pediatrics-normal-physiology_front.pdf`
         + `pediatrics-normal-physiology_back.pdf`
 
-### Structure of .yaml file
+### Structure of .yml file
 ```yaml
-domain: 'pediatrics'
-category: 'general'
-header_front: 'Normal Physiology'
-header_back: 'Normal Physiology'
-# Custom footers are currently not implemented
-#footer_front: ''
-#footer_back: ''
+## Card ########################
+domain: 'Domain Name'
+category: 'Category Name'
+
+modified_date: 'Date of last modification'
+verified_date: 'Date of verification'
+verified_by: 'Verified by'
+
+## Front #######################
+front_header: 'Header of front face'
+front_footer: 'Footer of front face'
+
+front_toc:
+  - 'Table of contents for front face'
+  - 'As a list'
+front_references:
+  - 'References for front face'
+  - 'As a list'
+
+## Back ########################
+back_header: 'Header of back face'
+back_footer: 'Footer of back face'
+
+back_toc:
+  - 'Table of contents for front face'
+  - 'As a list'
+back_references:
+  - 'References for back face'
+  - 'As a list'
 ```
 For more info on YAML, see http://yaml.org/
 

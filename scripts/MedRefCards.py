@@ -49,7 +49,7 @@ def yaml_dump(filepath, data):
 
 class MedRefCardFace():
 	"""Medical Reference Card Face"""
-	def __init__(self, header, content_path, footer):
+	def __init__(self, header, content_path, footer, toc, references):
 		self.header = header
 		self.content_path = content_path
 		self.footer = footer
@@ -71,23 +71,25 @@ class MedRefCard():
 		self.domain = card_dict['domain']
 		self.category = card_dict['category']
 
+		self.modified_date = card_dict['modified_date']
+		self.verified_date = card_dict['verified_date']
+		self.verified_by = card_dict['verified_by']
+
 		self.front_face = MedRefCardFace(
 			card_dict['front_header'],
 			os.path.join(self.card_folder, self.card_fn + '-front.pdf'),
-			card_dict['front_footer']
-			# card_dict['front_references']
+			card_dict['front_footer'],
+			card_dict['front_toc'],
+			card_dict['front_references']
 		)
 
 		self.back_face = MedRefCardFace(
 			card_dict['back_header'],
 			os.path.join(self.card_folder, self.card_fn + '-back.pdf'),
-			card_dict['back_footer']
-			# card_dict['back_references']
+			card_dict['back_footer'],
+			card_dict['back_toc'],
+			card_dict['back_references']
 		)
-
-		# self.modified_date = card_dict['modified_date']
-		# self.verified_date = card_dict['verified_date']
-		# self.verified_by = card_dict['verified_by']
 
 
 class MedRefDeck():
@@ -159,6 +161,7 @@ class MedRefCards():
 
 		c = canvas.Canvas(output_path, canvas_size)
 
+		self.draw_front_page(c, canvas_size[0], canvas_size[1])
 		for card in self.med_ref_deck.cards:
 			draw_card(c, card, colour_scheme, frame_layout)
 
@@ -224,6 +227,22 @@ class MedRefCards():
 		c.translate(frame_layout['border']['left']*cm + offset, frame_layout['border']['bottom']*cm)
 		c.doForm(makerl(c, page))
 		c.restoreState()
+
+	def draw_front_page(self, c, width, height):
+		title_text = 'Medical Reference Cards'
+		subtitle_text = 'github.com/alping/medical-reference-cards'
+
+		c.setFillColorRGB(0, 0, 0)
+
+		# Draw title
+		c.setFont('Helvetica-Bold', 20, leading = None)
+		c.drawCentredString(width/2, height - 4*cm, title_text)
+
+		# Draw subtitle
+		c.setFont('Helvetica-Bold', 8, leading = None)
+		c.drawCentredString(width/2, height - 4.5*cm, subtitle_text)
+
+		c.showPage()
 
 
 if __name__ == '__main__':
