@@ -53,6 +53,8 @@ class MedRefCardFace():
 		self.header = header
 		self.content_path = content_path
 		self.footer = footer
+		self.toc = toc
+		self.references = references
 
 
 class MedRefCard():
@@ -127,18 +129,18 @@ class MedRefCards():
 	def generate_deck(self, card_filter='all', content_path='../contents'):
 		self.med_ref_deck = MedRefDeck(card_filter, content_path)
 
-	def generate_pdf(self, spread=True, colour_scheme='default', frame_layout='default', output_folder='../pdf'):
+	def generate_pdf(self, spread=True, colour_scheme='default-colour-scheme', frame_layout='default-frame-layout', output_folder='../pdf'):
 		## Colour scheme check
 		colour_scheme_path = os.path.join('../theme/colour-schemes', colour_scheme + '.yml')
 		if not os.path.isfile(colour_scheme_path):
 			logging.warning('No colour scheme: ' + colour_scheme + '. Using colour scheme: default.')
-			colour_scheme_path = '../theme/colour-schemes/default.yml'
+			colour_scheme_path = '../theme/colour-schemes/default-colour-scheme.yml'
 
 		## Frame layout check
 		frame_layout_path = os.path.join('../theme/frame-layouts', frame_layout + '.yml')
 		if not os.path.isfile(frame_layout_path):
 			logging.warning('No frame layout: ' + frame_layout + '. Using frame layout: default.')
-			frame_layout_path = '../theme/frame-layouts/default.yml'
+			frame_layout_path = '../theme/frame-layouts/default-frame-layout.yml'
 
 		if spread:
 			output_fn = 'medical-reference-cards' + '-spread'
@@ -205,7 +207,22 @@ class MedRefCards():
 	def draw_card_spread(self, c, card, colour_scheme, frame_layout):
 		self.draw_card_face(c, card.front_face, card.domain, colour_scheme, frame_layout, 1)
 		self.draw_card_face(c, card.back_face, card.domain, colour_scheme, frame_layout, 2, frame_layout['card']['width']*cm)
-		self.add_toc_item(c, card.front_face.header + ' / ' + card.back_face.header, card.front_face.header + '-' + card.back_face.header, 1)
+		self.add_toc_item(c, card.front_face.header + ' / ' + card.back_face.header, card.front_face.header + '-' + card.back_face.header, 1, True)
+		
+		item_nr = 0
+
+		self.add_toc_item(c, 'Front Face', card.front_face.header + '-front', 2)
+		for title in card.front_face.toc:
+			if title != '':
+				self.add_toc_item(c, title, card.front_face.header + '-' + str(item_nr), 3)
+				item_nr += 1
+
+		self.add_toc_item(c, 'Back Face', card.back_face.header + '-back', 2)
+		for title in card.back_face.toc:
+			if title != '':
+				self.add_toc_item(c, title, card.back_face.header + '-' + str(item_nr), 3)
+				item_nr += 1
+
 		c.showPage()
 
 	def draw_card_page(self, c, card, colour_scheme, frame_layout):
@@ -213,14 +230,34 @@ class MedRefCards():
 
 		self.draw_card_face(c, card.front_face, card.domain, colour_scheme, frame_layout, 1)
 		self.add_toc_item(c, card.front_face.header, card.front_face.header, 2)
+		
+		item_nr = 0
+		
+		for title in card.front_face.toc:
+			if title != '':
+				self.add_toc_item(c, title, card.front_face.header + '-' + str(item_nr), 3)
+				item_nr += 1
+		
 		c.showPage()
 
 		self.draw_card_face(c, card.back_face, card.domain, colour_scheme, frame_layout, 2)
 		self.add_toc_item(c, card.back_face.header, card.back_face.header, 2)
+		
+		item_nr = 0
+		
+		for title in card.back_face.toc:
+			if title != '':
+				self.add_toc_item(c, title, card.back_face.header + '-' + str(item_nr), 3)
+				item_nr += 1
+		
 		c.showPage()
 
 	def draw_card_face(self, c, card_face, domain, colour_scheme, frame_layout, page_nr, offset = 0):
-		colour = colour_scheme[domain]
+		if domain in colour_scheme:
+			colour = colour_scheme[domain]
+		else:
+			logging.warning('No colour defined for domain: ' + domain + ', in colour scheme.')
+			colour = (0.5, 0.5, 0.5)
 
 		# Colour frame
 		c.setFillColorRGB(colour[0], colour[1], colour[2])
