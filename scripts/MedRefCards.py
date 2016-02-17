@@ -297,5 +297,5 @@ class MedRefCards():
 if __name__ == '__main__':
 	med_ref_cards = MedRefCards()
 	med_ref_cards.generate_deck()
-	med_ref_cards.generate_pdf(spread=True, frame_layout='print', output_folder='../pdf/print')
-	med_ref_cards.generate_pdf(spread=False, frame_layout='screen', output_folder='../pdf/screen')
+	med_ref_cards.generate_pdf(spread=True, frame_layout='print')
+	med_ref_cards.generate_pdf(spread=False, frame_layout='screen')
