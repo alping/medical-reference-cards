@@ -29,13 +29,17 @@ There are 3 files making up each card (replace `card` with actual card name and 
 Besides these files, there might be additional source files (files containing data or designs) for each card located in the source subfolder.
 
 For filenames use:
-    - The domain and card name as the base
-    - All lowercase letters
-    - Hyphens (-) to combine words
-    - Example filenames for card describing the normal physiology for the pediatrics domain:
-        + `pediatrics-normal-physiology.yaml`
-        + `pediatrics-normal-physiology_front.pdf`
-        + `pediatrics-normal-physiology_back.pdf`
+  - The domain and card name as the base
+  - All lowercase letters
+  - Hyphens (-) to combine words
+  - Example filenames for card describing the normal physiology for the pediatrics domain:
+    + `pediatrics-normal-physiology.yaml`
+    + `pediatrics-normal-physiology_front.pdf`
+    + `pediatrics-normal-physiology_back.pdf`
+
+### Style guide for content
+- Font: Arial or Helvetica, around 10p (depending on content)
+- Images: Preferably vector images
 
 ### Structure of .yml file
 ```yaml

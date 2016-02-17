@@ -1,0 +1,27 @@
+## Card ########################
+domain: 'neurology'
+category: 'general'
+
+modified_date: '160217'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'Dermatomes'
+front_footer: ''
+
+front_toc:
+  - 'Dermatome map'
+front_references:
+  - 'Grant, John Charles Boileau. An Atlas of Anatomy: by Regions (1962)'
+  - 'https://commons.wikimedia.org/wiki/File:Grant_1962_663.png'
+
+## Back ########################
+back_header: 'Myotomes'
+back_footer: ''
+
+back_toc:
+  - 'List of myotomes'
+back_references:
+  - 'Wikipedia'
+  - 'https://en.wikipedia.org/wiki/Myotome'

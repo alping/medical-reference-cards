@@ -1,0 +1,25 @@
+## Card ########################
+domain: 'neurology'
+category: 'general'
+
+modified_date: '160217'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'Neurological exam.'
+front_footer: ''
+
+front_toc:
+  - 'Neurological examination'
+front_references:
+  - 'Neurological examination cheat sheet from the Neurology department at Karolinska University Hospital, Solna'
+
+## Back ########################
+back_header: 'Glasgow Coma Scale'
+back_footer: ''
+
+back_toc:
+  - 'Glasgow Coma Scale'
+back_references:
+  - 'Neurological cheat sheet from the Neurology department in Karolinska University Hospital, Solna'
