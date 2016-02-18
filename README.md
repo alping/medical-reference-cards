@@ -81,3 +81,5 @@ For more info on YAML, see http://yaml.org/
 ## Contributors
 - Peter Alping (peter@alping.se) - Medical student, Karolinska Institutet, Sweden
 - Sebastian Samuelsson - Medical student, Karolinska Institutet, Sweden
+- Martin Östholm - Medical student, Karolinska Institutet, Sweden
+- Emil Sternegård - Medical student, Karolinska Institutet, Sweden
