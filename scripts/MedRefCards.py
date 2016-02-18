@@ -258,7 +258,7 @@ class MedRefCards():
 
 	def draw_card_face(self, c, card_face, domain, colour_scheme, frame_layout, page_nr, offset = 0):
 		if domain in colour_scheme:
-			colour = colour_scheme[domain]
+			colour = (colour_scheme[domain][0]/255, colour_scheme[domain][1]/255, colour_scheme[domain][2]/255)
 		else:
 			logging.warning('No colour defined for domain: ' + domain + ', in colour scheme.')
 			colour = (0.5, 0.5, 0.5)

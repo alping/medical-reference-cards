@@ -4,16 +4,17 @@
 
 ## Domain: [red, green, blue] (colour value: 0-1) ###
 
-general: [0.2, 0.8, 0.4]
-laboratory: [0.8, 0.2, 0.4]
-medicine: [0.6, 0.2, 0.6]
-neurology: [0.4, 0.4, 0.6]
-orthopedics: [0.8, 0.4, 0.2]
-pediatrics: [0.25, 0.6, 0.96]
+endocrinology: [153, 51, 153]
+general: [40, 190, 150]
+laboratory: [180, 40, 102]
+medicine: [20, 180, 80]
+neurology: [102, 102, 153]
+orthopedics: [255, 130, 54]
+pediatrics: [64, 153, 255]
 
-anaesthesiology: [0.5, 0.5, 0.5]
+anaesthesiology: [255, 67, 64]
 emergency: [0.5, 0.5, 0.5]
-endocrinology: [0.5, 0.5, 0.5]
 gastroenterology: [0.5, 0.5, 0.5]
-gynecology: [0.5, 0.5, 0.5]
+gynecology: [255, 64, 156]
 surgery: [0.5, 0.5, 0.5]
+
