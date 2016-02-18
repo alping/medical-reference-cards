@@ -6,12 +6,13 @@
 
 general: [0.2, 0.8, 0.4]
 laboratory: [0.8, 0.2, 0.4]
+medicine: [0.6, 0.2, 0.6]
 neurology: [0.4, 0.4, 0.6]
 orthopedics: [0.8, 0.4, 0.2]
 pediatrics: [0.25, 0.6, 0.96]
 
 anaesthesiology: [0.5, 0.5, 0.5]
-emergency-medicine: [0.5, 0.5, 0.5]
+emergency: [0.5, 0.5, 0.5]
 endocrinology: [0.5, 0.5, 0.5]
 gastroenterology: [0.5, 0.5, 0.5]
 gynecology: [0.5, 0.5, 0.5]

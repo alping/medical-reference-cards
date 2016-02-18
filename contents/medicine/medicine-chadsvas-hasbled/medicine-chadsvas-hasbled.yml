@@ -1,0 +1,25 @@
+## Card ########################
+domain: 'medicine'
+category: 'general'
+
+modified_date: '160218'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'CHA2DS2VAS'
+front_footer: ''
+
+front_toc:
+  - 'CHA2DS2VAS'
+front_references:
+  - 'Behandlingsprogram Akut internmedicin Janusinfo 2015. Fass.'
+
+## Back ########################
+back_header: 'HAS-BLED'
+back_footer: ''
+
+back_toc:
+  - 'HAS-BLED'
+back_references:
+  - 'Behandlingsprogram Akut internmedicin Janusinfo 2015.'
