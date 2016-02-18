@@ -162,9 +162,13 @@ class MedRefCards():
 			draw_card = self.draw_card_page
 
 		c = canvas.Canvas(output_path, canvas_size)
+		active_domain = ''
 
-		self.draw_front_page(c, canvas_size[0], canvas_size[1])
+		self.draw_title_page(c, canvas_size[0], canvas_size[1])
 		for card in self.med_ref_deck.cards:
+			if card.domain != active_domain:
+				self.add_toc_item(c, card.domain.title(), 'domain-' + card.domain, 1, True)
+				active_domain = card.domain
 			draw_card(c, card, colour_scheme, frame_layout)
 
 		c.save()
@@ -186,7 +190,7 @@ class MedRefCards():
 		c.bookmarkPage(key)
 		c.addOutlineEntry(title, key, level, closed)
 
-	def draw_front_page(self, c, width, height):
+	def draw_title_page(self, c, width, height):
 		title_text = 'Medical Reference Cards'
 		subtitle_text = 'github.com/alping/medical-reference-cards'
 
@@ -200,54 +204,54 @@ class MedRefCards():
 		c.setFont('Helvetica-Bold', 8, leading = None)
 		c.drawCentredString(width/2, height - 4.5*cm, subtitle_text)
 
-		self.add_toc_item(c, 'Medical Reference Cards', 'medical-reference-cards', 0)
+		self.add_toc_item(c, title_text, 'title-page', 0)
 
 		c.showPage()
 
 	def draw_card_spread(self, c, card, colour_scheme, frame_layout):
 		self.draw_card_face(c, card.front_face, card.domain, colour_scheme, frame_layout, 1)
 		self.draw_card_face(c, card.back_face, card.domain, colour_scheme, frame_layout, 2, frame_layout['card']['width']*cm)
-		self.add_toc_item(c, card.front_face.header + ' / ' + card.back_face.header, card.front_face.header + '-' + card.back_face.header, 1, True)
+		self.add_toc_item(c, card.front_face.header + ' / ' + card.back_face.header, card.front_face.header + '-' + card.back_face.header, 2, True)
 		
 		item_nr = 0
 
-		self.add_toc_item(c, 'Front Face', card.front_face.header + '-front', 2)
+		self.add_toc_item(c, 'Front Face', card.front_face.header + '-front', 3)
 		for title in card.front_face.toc:
 			if title != '':
-				self.add_toc_item(c, title, card.front_face.header + '-' + str(item_nr), 3)
+				self.add_toc_item(c, title, card.front_face.header + '-' + str(item_nr), 4)
 				item_nr += 1
 
-		self.add_toc_item(c, 'Back Face', card.back_face.header + '-back', 2)
+		self.add_toc_item(c, 'Back Face', card.back_face.header + '-back', 3)
 		for title in card.back_face.toc:
 			if title != '':
-				self.add_toc_item(c, title, card.back_face.header + '-' + str(item_nr), 3)
+				self.add_toc_item(c, title, card.back_face.header + '-' + str(item_nr), 4)
 				item_nr += 1
 
 		c.showPage()
 
 	def draw_card_page(self, c, card, colour_scheme, frame_layout):
-		self.add_toc_item(c, card.front_face.header + ' / ' + card.back_face.header, card.front_face.header + '-' + card.back_face.header, 1, True)
+		self.add_toc_item(c, card.front_face.header + ' / ' + card.back_face.header, card.front_face.header + '-' + card.back_face.header, 2, True)
 
 		self.draw_card_face(c, card.front_face, card.domain, colour_scheme, frame_layout, 1)
-		self.add_toc_item(c, card.front_face.header, card.front_face.header, 2)
+		self.add_toc_item(c, card.front_face.header, card.front_face.header, 3)
 		
 		item_nr = 0
 		
 		for title in card.front_face.toc:
 			if title != '':
-				self.add_toc_item(c, title, card.front_face.header + '-' + str(item_nr), 3)
+				self.add_toc_item(c, title, card.front_face.header + '-' + str(item_nr), 4)
 				item_nr += 1
 		
 		c.showPage()
 
 		self.draw_card_face(c, card.back_face, card.domain, colour_scheme, frame_layout, 2)
-		self.add_toc_item(c, card.back_face.header, card.back_face.header, 2)
+		self.add_toc_item(c, card.back_face.header, card.back_face.header, 3)
 		
 		item_nr = 0
 		
 		for title in card.back_face.toc:
 			if title != '':
-				self.add_toc_item(c, title, card.back_face.header + '-' + str(item_nr), 3)
+				self.add_toc_item(c, title, card.back_face.header + '-' + str(item_nr), 4)
 				item_nr += 1
 		
 		c.showPage()
@@ -286,12 +290,13 @@ class MedRefCards():
 		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, 0.15*cm, frame_layout['static_text']['footer'])
 
 		# Include contents
-		c.setFillColorRGB(0, 0, 0)
-		page = pagexobj(PdfReader(card_face.content_path).pages[0])
-		c.saveState()
-		c.translate(frame_layout['border']['left']*cm + offset, frame_layout['border']['bottom']*cm)
-		c.doForm(makerl(c, page))
-		c.restoreState()
+		if os.path.isfile(card_face.content_path):
+			c.setFillColorRGB(0, 0, 0)
+			page = pagexobj(PdfReader(card_face.content_path).pages[0])
+			c.saveState()
+			c.translate(frame_layout['border']['left']*cm + offset, frame_layout['border']['bottom']*cm)
+			c.doForm(makerl(c, page))
+			c.restoreState()
 
 
 if __name__ == '__main__':

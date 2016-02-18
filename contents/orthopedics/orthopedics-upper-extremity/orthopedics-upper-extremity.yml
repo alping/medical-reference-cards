@@ -1,0 +1,25 @@
+## Card ########################
+domain: 'orthopedics'
+category: 'general'
+
+modified_date: '160218'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'Distal Status - Hand'
+front_footer: ''
+
+front_toc:
+  - 'Distal status of hand'
+front_references:
+  - 'Martin'
+
+## Back ########################
+back_header: '- Empty -'
+back_footer: ''
+
+back_toc:
+  - ''
+back_references:
+  - ''
