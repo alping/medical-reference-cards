@@ -1,0 +1,33 @@
+## Card ########################
+domain: 'endocrinology'
+category: 'advanced procedures'
+
+modified_date: '160218'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'Adrenal Venous Sampling'
+front_footer: ''
+
+front_toc:
+  - 'Introduction'
+  - 'The procedure'
+  - 'Execution'
+  - 'Interpretation'
+front_references:
+  - 'Deipolyi AR, Oklu R. Adrenal vein sampling in the diagnosis of aldosteronism. J Vasc Diag. 2015 Jun;3:17-23.'
+  - 'Melmed S, Polonsky KS, Larsen PR, Kronenberg HM. Williams Textbook of Endocrinology. 13th ed. Philadelphia, PA: Saunders Elsevier; 2015:chap 16.'
+
+## Back ########################
+back_header: 'Adrenal Venous Sampling'
+back_footer: ''
+
+back_toc:
+  - 'Introduction'
+  - 'The procedure'
+  - 'Execution'
+  - 'Interpretation'
+back_references:
+  - 'Deipolyi AR, Oklu R. Adrenal vein sampling in the diagnosis of aldosteronism. J Vasc Diag. 2015 Jun;3:17-23.'
+  - 'Melmed S, Polonsky KS, Larsen PR, Kronenberg HM. Williams Textbook of Endocrinology. 13th ed. Philadelphia, PA: Saunders Elsevier; 2015:chap 16.'
