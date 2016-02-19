@@ -3,7 +3,7 @@
 #####################################################
 
 spread: true
-footer_index: false
+footer_index: true
 
 ## Dimensions in cm #################################
 content:
@@ -14,8 +14,8 @@ border:
   right: 0.25
   bottom: 0.5
   left: 0.25
-  outer_corner_radius: 0.5
-  inner_corner_radius: 0.2
+  outer_corner_radius: 0.3
+  inner_corner_radius: 0.15
 key_ring:
   radius: 1.2  
 

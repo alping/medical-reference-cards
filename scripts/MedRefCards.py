@@ -355,9 +355,9 @@ class MedRefCards():
 			c.setFillColorRGB(colour[0], colour[1], colour[2])
 
 			if face_nr == 1:
-				c.roundRect(x_pos_1, y_pos, width, height, radius=0.05*cm, stroke=0, fill=1)
+				c.roundRect(x_pos_1, y_pos, width, height, radius=0.06*cm, stroke=0, fill=1)
 			if face_nr == 2:
-				c.roundRect(x_pos_2, y_pos, width, height, radius=0.05*cm, stroke=0, fill=1)
+				c.roundRect(x_pos_2, y_pos, width, height, radius=0.06*cm, stroke=0, fill=1)
 		else:
 			c.setFillColorRGB(1, 1, 1)
 			c.setFont('Helvetica', 8, leading = None)
@@ -376,6 +376,6 @@ class MedRefCards():
 if __name__ == '__main__':
 	med_ref_cards = MedRefCards()
 	med_ref_cards.generate_deck()
-	med_ref_cards.generate_pdf()
 	med_ref_cards.generate_pdf(frame_layout='print')
+	med_ref_cards.generate_pdf(frame_layout='indexed')
 	med_ref_cards.generate_pdf(frame_layout='screen')
