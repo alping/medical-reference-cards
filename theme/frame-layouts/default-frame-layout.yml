@@ -2,6 +2,9 @@
 ## Default frame layout #############################
 #####################################################
 
+spread: true
+footer_index: false
+
 ## Dimensions in cm #################################
 content:
   width: 10
