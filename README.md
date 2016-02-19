@@ -1,5 +1,5 @@
 # Medical reference cards
-This is an effort to create a series of reference cards, usable to anyone involved in health care and medicine. This is a free and open source project (GNU-GPL), and as such you are at liberty to use the resources here pretty much as you wish (see the LICENCE). However, this is very much a work in progress and no guarantee for the correctness or completeness of these cards can be given. Use these cards at your own risk. With that said, the goal for this project is to provide an accurate, usable, and expandable collection of reference cards. Please feel free to contribute!
+This is an effort to create a series of reference cards, usable to anyone involved in health care and medicine. This is a free and open source project (GNU-GPL), and as such you are at liberty to use the resources here pretty much as you wish (see the LICENCE). However, this is very much a work in progress and thus no guarantee for the correctness or completeness of these cards can be given. Use these cards at your own risk. With that said, the goal for this project is to provide an accurate, usable, and expandable collection of medical reference cards. Please feel free to contribute!
 
 ## Usage
 This is a collection of reference cards for the use in medical practice. These cards are designed to be printed, folded, laminated, and put on a key ring, or to be viewed on a screen, of for example a phone or tablet.
@@ -18,7 +18,7 @@ Contributing is easy! You just need to create one pdf file for the front and one
 - The dimensions of the content area are 100mm x 130mm
 - The meta-data for each card are stored in a .yaml file
 - The content for each card is stored in a separate pdf file for each face
-- The cards are outputted to a pdf file by running the python script `medical-reference-cards.py`
+- The cards are outputted to a pdf file by running the python script `MedRefCards.py`
 
 ### Files and naming convention
 There are 3 files making up each card (replace `card` with actual card name and `domain` with actual domain name):
