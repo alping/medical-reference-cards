@@ -56,6 +56,9 @@ class MedRefCardFace():
 		self.toc = toc
 		self.references = references
 
+	def __repr__(self):
+		return repr((self.header, self.content_path, self.footer, self.toc, self.references))
+
 
 class MedRefCard():
 	"""Medical Reference Card"""
@@ -93,6 +96,10 @@ class MedRefCard():
 			card_dict['back_references']
 		)
 
+		def __repr__(self):
+			return repr((self.card_folder, self.card_fn, self.domain, self.category, self.modified_date, self.verified_date,
+				self.verified_by, self.front_face, self.back_face))
+
 
 class MedRefDeck():
 	"""Medical Reference Card Deck"""
@@ -110,6 +117,9 @@ class MedRefDeck():
 
 		logging.info('Deck generated successfully. Number of cards: ' + str(len(self.cards)))
 
+	def __repr__(self):
+		return repr((self.card_filter, self.content_path, self.cards))
+
 	def find_all_cards(self):
 		pattern = '*.yml'
 		path = self.content_path
@@ -120,14 +130,24 @@ class MedRefDeck():
 					result.append(os.path.join(root, name))
 		return result
 
+	def sort(self, reverse=False):
+		self.cards = sorted(self.cards, key=lambda card_face: card_face.domain, reverse=reverse)
+
 
 class MedRefCards():
 	"""Class for generating and printing medical reference cards"""
 	def __init__(self, card_filter='all', content_path='../contents'):
-		self.generate_deck(card_filter, content_path)
+		self.med_ref_deck = self.generate_deck(card_filter, content_path)
+		self.sort_deck()
 		
+	def __repr__(self):
+		return repr((self.med_ref_deck))
+
 	def generate_deck(self, card_filter='all', content_path='../contents'):
-		self.med_ref_deck = MedRefDeck(card_filter, content_path)
+		return MedRefDeck(card_filter, content_path)
+
+	def sort_deck(self, reverse=False):
+		self.med_ref_deck.sort(reverse)
 
 	def generate_pdf(self, spread=True, colour_scheme='default-colour-scheme', frame_layout='default-frame-layout', output_folder='../pdf'):
 		## Colour scheme check
@@ -279,10 +299,18 @@ class MedRefCards():
 
 		# Domain / Caetgory text
 		c.setFont('Helvetica', 10, leading = None)
+
 		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, frame_layout['card']['height']*cm - 0.47*cm, '- ' + domain.title() + ' -')
 
 		# Header text
-		c.setFont('Helvetica-Bold', 20, leading = None)
+		if len(card_face.header) < 23:
+			c.setFont('Helvetica-Bold', 20, leading = None)
+		elif len(card_face.header) < 36:
+			c.setFont('Helvetica-Bold', 19, leading = None)
+		else:
+			c.setFont('Helvetica-Bold', 18, leading = None)
+
+
 		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, frame_layout['card']['height']*cm - 1.23*cm, card_face.header)
 
 		# Footer text

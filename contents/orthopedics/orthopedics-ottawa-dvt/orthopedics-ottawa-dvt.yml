@@ -16,7 +16,7 @@ front_references:
   - ''
 
 ## Back ########################
-back_header: 'DVT Score'
+back_header: 'Well''s DVT Score'
 back_footer: ''
 
 back_toc:
