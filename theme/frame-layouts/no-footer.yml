@@ -1,0 +1,24 @@
+#####################################################
+## Default frame layout #############################
+#####################################################
+
+spread: true
+footer_index: false
+
+## Dimensions in cm #################################
+content:
+  width: 10
+  height: 13
+border:
+  top: 1.5
+  right: 0.25
+  bottom: 0.25
+  left: 0.25
+  outer_corner_radius: 0.4
+  inner_corner_radius: 0.4
+key_ring:
+  radius: 1.2  
+
+## Static text values ###############################
+static_text:
+  footer: ''

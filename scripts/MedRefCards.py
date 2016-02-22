@@ -1,4 +1,6 @@
-# Class file for generating and printing medical reference cards.
+#!/usr/bin/python
+
+# Class file for generating and printing medical reference cards
 # Copyright (C) 2016 Peter Alping
 #
 # This program is free software: you can redistribute it and/or modify
@@ -375,7 +377,7 @@ class MedRefCards():
 
 if __name__ == '__main__':
 	med_ref_cards = MedRefCards()
-	med_ref_cards.generate_deck()
 	med_ref_cards.generate_pdf(frame_layout='print')
+	med_ref_cards.generate_pdf(frame_layout='no-footer')
 	med_ref_cards.generate_pdf(frame_layout='indexed')
 	med_ref_cards.generate_pdf(frame_layout='screen')

@@ -11,6 +11,7 @@ medicine: [20, 180, 80]
 neurology: [102, 102, 153]
 orthopedics: [255, 130, 54]
 pediatrics: [64, 153, 255]
+pharmacology: [200, 150, 100]
 
 anaesthesiology: [255, 67, 64]
 emergency: [0.5, 0.5, 0.5]

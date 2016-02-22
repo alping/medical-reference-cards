@@ -1,0 +1,25 @@
+## Card ########################
+domain: 'pharmacology'
+category: 'general'
+
+modified_date: '160222'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'Addiction'
+front_footer: ''
+
+front_toc:
+  - 'Bezodiazepine equivalents'
+front_references:
+  - 'Marius'
+
+## Back ########################
+back_header: '- Empty -'
+back_footer: ''
+
+back_toc:
+  - ''
+back_references:
+  - ''
