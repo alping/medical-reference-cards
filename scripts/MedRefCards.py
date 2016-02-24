@@ -75,8 +75,8 @@ class MedRefCard():
 		self.card_folder = path_reg_ex.group('path')
 		self.card_fn = fn_reg_ex.group('fn')
 		
-		self.domain = card_dict['domain']
-		self.category = card_dict['category']
+		self.domain = card_dict['domain'].lower()
+		self.category = card_dict['category'].lower()
 
 		self.modified_date = card_dict['modified_date']
 		self.verified_date = card_dict['verified_date']
@@ -378,6 +378,6 @@ class MedRefCards():
 if __name__ == '__main__':
 	med_ref_cards = MedRefCards()
 	med_ref_cards.generate_pdf(frame_layout='print')
-	med_ref_cards.generate_pdf(frame_layout='no-footer')
-	med_ref_cards.generate_pdf(frame_layout='indexed')
-	med_ref_cards.generate_pdf(frame_layout='screen')
+	# med_ref_cards.generate_pdf(frame_layout='no-footer')
+	# med_ref_cards.generate_pdf(frame_layout='indexed')
+	# med_ref_cards.generate_pdf(frame_layout='screen')

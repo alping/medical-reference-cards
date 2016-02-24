@@ -84,3 +84,4 @@ For more info on YAML, see http://yaml.org/
 - Martin Östholm - Medical student, Karolinska Institutet, Sweden
 - Emil Sternegård - Medical student, Karolinska Institutet, Sweden
 - Marius Matusevicius - Medical student, Karolinska Institutet, Sweden
+- Kajsa Thilander - Medical student, Karolinska Institutet, Sweden

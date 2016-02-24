@@ -1,0 +1,28 @@
+## Card ########################
+domain: 'Obstetrics & Gynecology'
+category: 'general'
+
+modified_date: '160217'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'Acute abdominal pain'
+front_footer: ''
+
+front_toc:
+  - 'Acute abdominal pain'
+front_references:
+  - 'Internetmedicin.se: Akuta gynekologiska buksmärtor'
+  - 'Internetmedicin.se: Endometrios'
+
+## Back ########################
+back_header: 'Fever Post Partum'
+back_footer: ''
+
+back_toc:
+  - 'Fever Post Partum'
+back_references:
+  - 'Lecture slides Danderyd''s Hospital, Stockholm'
+  - 'www.Strama.se'
+  - 'Internetmedicin.se: Pneumoni'
