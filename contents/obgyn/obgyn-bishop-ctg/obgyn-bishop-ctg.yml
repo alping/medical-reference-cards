@@ -7,21 +7,21 @@ verified_date: ''
 verified_by: ''
 
 ## Front #######################
-front_header: 'CTG'
+front_header: 'Bishop''s index'
 front_footer: ''
 
 front_toc:
-  - 'CTG'
+  - 'Bishop''s index'
 front_references:
   - 'Lecture slides Danderyd''s Hospital, Stockholm'
   - 'Hagmar H. Obstetrik. Riktlinjer västra götalandsregionen'
 
 ## Back ########################
-back_header: 'Bishop''s index'
+back_header: 'CTG'
 back_footer: ''
 
 back_toc:
-  - 'Bishop''s index'
+  - 'CTG'
 back_references:
   - 'Lecture slides Danderyd''s Hospital, Stockholm'
   - 'Hagmar H. Obstetrik. Riktlinjer västra götalandsregionen'

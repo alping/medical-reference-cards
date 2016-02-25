@@ -184,7 +184,7 @@ class MedRefCards():
 			draw_size = canvas_size = (frame_layout['card']['width']*cm, frame_layout['card']['height']*cm)
 			draw_card = self.draw_card_page
 
-		c = canvas.Canvas(output_path, canvas_size)
+		c = canvas.Canvas(output_path, canvas_size, pageCompression = 0)
 
 		self.draw_title_page(c, canvas_size[0], canvas_size[1])
 		
@@ -380,4 +380,4 @@ if __name__ == '__main__':
 	med_ref_cards.generate_pdf(frame_layout='print')
 	# med_ref_cards.generate_pdf(frame_layout='no-footer')
 	# med_ref_cards.generate_pdf(frame_layout='indexed')
-	# med_ref_cards.generate_pdf(frame_layout='screen')
+	med_ref_cards.generate_pdf(frame_layout='screen')
