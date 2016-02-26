@@ -378,6 +378,6 @@ class MedRefCards():
 if __name__ == '__main__':
 	med_ref_cards = MedRefCards()
 	med_ref_cards.generate_pdf(frame_layout='print')
-	# med_ref_cards.generate_pdf(frame_layout='no-footer')
+	med_ref_cards.generate_pdf(frame_layout='no-footer')
 	# med_ref_cards.generate_pdf(frame_layout='indexed')
 	med_ref_cards.generate_pdf(frame_layout='screen')
