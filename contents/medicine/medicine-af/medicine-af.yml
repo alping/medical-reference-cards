@@ -1,0 +1,26 @@
+## Card ########################
+domain: 'Medicine'
+category: ''
+
+modified_date: '160228'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'Atrial Fibrillation'
+front_footer: ''
+
+front_toc:
+  - 'Types of AF'
+  - 'Treatment of AF'
+front_references:
+  - 'Kajsa'
+
+## Back ########################
+back_header: ''
+back_footer: ''
+
+back_toc:
+  - ''
+back_references:
+  - ''
