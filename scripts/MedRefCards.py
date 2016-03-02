@@ -334,7 +334,7 @@ class MedRefCards():
 		# Domain / Caetgory text
 		c.setFont('Helvetica', 10, leading = None)
 
-		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, frame_layout['card']['height']*cm - 0.47*cm, '- ' + domain.title() + ' -')
+		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, frame_layout['card']['height']*cm - 0.5*cm, '- ' + domain.title() + ' -')
 
 		# Header text
 		if len(card_face.header) < 23:

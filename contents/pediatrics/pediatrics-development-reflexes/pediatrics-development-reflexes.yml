@@ -1,0 +1,25 @@
+## Card ########################
+domain: 'pediatrics'
+category: 'general'
+
+modified_date: '160215'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'Developmental Milestones'
+front_footer: ''
+
+front_toc:
+  - 'Developmental milestones (gross motor, fine motor, and cognitive and communicative skills), by age'
+front_references:
+  - 'Pediatric course booklet, Pediatrics course, Karolinska Hospital, Solna, Sweden'
+
+## Back ########################
+back_header: 'Reflexes'
+back_footer: ''
+
+back_toc:
+  - 'Primitive and postural reflexes'
+back_references:
+  - 'Illustrated Textbook of Paediatrics: Forth Edition. Tom Lissauer, Graham Clayden.'
