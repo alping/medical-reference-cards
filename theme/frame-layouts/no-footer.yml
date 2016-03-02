@@ -3,6 +3,8 @@
 #####################################################
 
 spread: true
+a4: false
+double_sided: false
 footer_index: false
 
 ## Dimensions in cm #################################
@@ -10,7 +12,7 @@ content:
   width: 10
   height: 13
 border:
-  top: 1.5
+  top: 1.55
   right: 0.25
   bottom: 0.25
   left: 0.25

@@ -178,8 +178,12 @@ class MedRefCards():
 		output_path = os.path.join(output_folder, output_fn)
 
 		if frame_layout['spread']:
-			canvas_size = (frame_layout['card_spread']['width']*cm, frame_layout['card_spread']['height']*cm)
-			draw_card = self.draw_card_spread
+			if frame_layout['a4']:
+				canvas_size = (frame_layout['card_spread']['width']*cm, 2*frame_layout['card_spread']['height']*cm)
+				# draw_card = self.draw_card_spread_a4
+			else:
+				canvas_size = (frame_layout['card_spread']['width']*cm, frame_layout['card_spread']['height']*cm)
+				draw_card = self.draw_card_spread
 		else:
 			draw_size = canvas_size = (frame_layout['card']['width']*cm, frame_layout['card']['height']*cm)
 			draw_card = self.draw_card_page
@@ -334,7 +338,7 @@ class MedRefCards():
 		# Domain / Caetgory text
 		c.setFont('Helvetica', 10, leading = None)
 
-		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, frame_layout['card']['height']*cm - 0.5*cm, '- ' + domain.title() + ' -')
+		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, frame_layout['card']['height']*cm - 0.48*cm, '- ' + domain.title() + ' -')
 
 		# Header text
 		if len(card_face.header) < 23:
@@ -344,7 +348,7 @@ class MedRefCards():
 		else:
 			c.setFont('Helvetica-Bold', 18, leading = None)
 
-		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, frame_layout['card']['height']*cm - 1.23*cm, card_face.header)
+		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, frame_layout['card']['height']*cm - 1.2*cm, card_face.header)
 
 		# Footer
 		if frame_layout['footer_index']:
@@ -362,8 +366,8 @@ class MedRefCards():
 				c.roundRect(x_pos_2, y_pos, width, height, radius=0.06*cm, stroke=0, fill=1)
 		else:
 			c.setFillColorRGB(1, 1, 1)
-			c.setFont('Helvetica', 8, leading = None)
-			c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, 0.15*cm, frame_layout['static_text']['footer'])
+			c.setFont('Helvetica', 7, leading = None)
+			c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, 0.13*cm, frame_layout['static_text']['footer'])
 
 		# Include contents
 		if os.path.isfile(card_face.content_path):
@@ -378,6 +382,7 @@ class MedRefCards():
 if __name__ == '__main__':
 	med_ref_cards = MedRefCards()
 	med_ref_cards.generate_pdf(frame_layout='print')
+	# med_ref_cards.generate_pdf(frame_layout='print-a4-double-sided')
 	med_ref_cards.generate_pdf(frame_layout='no-footer')
 	# med_ref_cards.generate_pdf(frame_layout='indexed')
 	med_ref_cards.generate_pdf(frame_layout='screen')
