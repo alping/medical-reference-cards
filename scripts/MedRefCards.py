@@ -131,7 +131,7 @@ class MedRefDeck():
 		return result
 
 	def sort(self, reverse=False):
-		self.cards = sorted(self.cards, key=lambda card_face: card_face.domain, reverse=reverse)
+		self.cards = sorted(self.cards, key=lambda card: card.domain, reverse=reverse)
 
 
 class MedRefCards():
