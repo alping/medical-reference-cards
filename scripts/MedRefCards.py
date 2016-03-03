@@ -157,7 +157,7 @@ class MedRefCards():
 	def sort_deck(self, reverse=False):
 		self.med_ref_deck.sort(reverse)
 
-	def generate_pdf(self, colour_scheme='default-colour-scheme', frame_layout='default-frame-layout', output_folder='../pdf'):
+	def generate_pdf(self, colour_scheme='default-colour-scheme', frame_layout='default-frame-layout', output_folder='../pdf', file_name=None, domain_filter=None, invert_filter=False, no_title=False):
 		## Colour scheme check
 		colour_scheme_path = os.path.join('../theme/colour-schemes', colour_scheme + '.yml')
 		if not os.path.isfile(colour_scheme_path):
@@ -174,7 +174,11 @@ class MedRefCards():
 		frame_layout_name = frame_layout
 		frame_layout = self.set_frame_layout(yaml_loader(frame_layout_path))
 
-		output_fn = 'medical-reference-cards' + '-' + frame_layout_name + '.pdf'
+		if file_name is not None:
+			output_fn = file_name + '.pdf'
+		else:
+			output_fn = 'medical-reference-cards' + '-' + frame_layout_name + '.pdf'
+
 		output_path = os.path.join(output_folder, output_fn)
 
 		if frame_layout['output'] == 'spread':
@@ -189,7 +193,8 @@ class MedRefCards():
 
 		c = canvas.Canvas(output_path, canvas_size, pageCompression = 0)
 
-		self.draw_title_page(c, canvas_size[0], canvas_size[1])
+		if not no_title:
+			self.draw_title_page(c, canvas_size[0], canvas_size[1])
 		
 		active_domain = ''
 		domain_index = []
@@ -197,17 +202,22 @@ class MedRefCards():
 		if frame_layout['output'] == 'double-sided':
 			cards_for_page = []
 			for card in self.med_ref_deck.cards:
-				cards_for_page.append(card)
-				if len(cards_for_page) == 4:
-					draw_card(c, cards_for_page, colour_scheme, frame_layout)
-					cards_for_page = []
+				if 	domain_filter is None or not invert_filter and card.domain in domain_filter or invert_filter and card.domain not in domain_filter:
+					cards_for_page.append(card)
+					if len(cards_for_page) == 4:
+						draw_card(c, cards_for_page, colour_scheme, frame_layout)
+						cards_for_page = []
+			if len(cards_for_page) > 0:
+				draw_card(c, cards_for_page, colour_scheme, frame_layout)
+
 		else:
 			for card in self.med_ref_deck.cards:
-				if card.domain != active_domain:
-					self.add_toc_item(c, card.domain.title(), 'domain-' + card.domain, 1, True)
-					domain_index.append(card.domain)
-					active_domain = card.domain
-				draw_card(c, card, colour_scheme, frame_layout)
+				if 	domain_filter is None or not invert_filter and card.domain in domain_filter or invert_filter and card.domain not in domain_filter:
+					if card.domain != active_domain:
+						self.add_toc_item(c, card.domain.title(), 'domain-' + card.domain, 1, True)
+						domain_index.append(card.domain)
+						active_domain = card.domain
+					draw_card(c, card, colour_scheme, frame_layout)
 
 		c.save()
 
@@ -268,6 +278,11 @@ class MedRefCards():
 		c.showPage()
 
 	def draw_double_sided(self, c, cards_for_page, colour_scheme, frame_layout):
+		guide_width = 0.02*cm
+
+		for add in range(len(cards_for_page)+1, 5):
+			cards_for_page.append(None)
+
 		for card_number in range(4,0,-1):
 			if card_number % 2 == 0:
 				x_offset = frame_layout['card']['width']*cm
@@ -279,7 +294,19 @@ class MedRefCards():
 			else:
 				y_offset = frame_layout['card']['height']*cm
 
-			self.draw_card_face(c, cards_for_page[card_number-1].front_face, cards_for_page[card_number-1].domain, colour_scheme, frame_layout, 1, x_offset, y_offset)
+			if cards_for_page[card_number-1] is not None:
+				self.draw_card_face(c, cards_for_page[card_number-1].front_face, cards_for_page[card_number-1].domain, colour_scheme, frame_layout, 1, x_offset, y_offset)
+
+		c.setFillColorRGB(1, 1, 1)
+		
+		c.rect(	frame_layout['card']['width']*cm - guide_width/2, 0,
+				guide_width, 2 * frame_layout['card']['height']*cm,
+				stroke=0, fill=1)
+
+		c.rect(	0, frame_layout['card']['height']*cm - guide_width/2,
+				2 * frame_layout['card']['width']*cm, guide_width,
+				stroke=0, fill=1)
+
 		c.showPage()
 
 		for card_number in range(4,0,-1):
@@ -293,7 +320,19 @@ class MedRefCards():
 			else:
 				y_offset = frame_layout['card']['height']*cm
 
-			self.draw_card_face(c, cards_for_page[card_number-1].back_face, cards_for_page[card_number-1].domain, colour_scheme, frame_layout, 2, x_offset, y_offset)
+			if cards_for_page[card_number-1] is not None:
+				self.draw_card_face(c, cards_for_page[card_number-1].back_face, cards_for_page[card_number-1].domain, colour_scheme, frame_layout, 2, x_offset, y_offset)
+		
+		c.setFillColorRGB(1, 1, 1)
+		
+		c.rect(	frame_layout['card']['width']*cm - guide_width/2, 0,
+				guide_width, 2 * frame_layout['card']['height']*cm,
+				stroke=0, fill=1)
+
+		c.rect(	0, frame_layout['card']['height']*cm - guide_width/2,
+				2 * frame_layout['card']['width']*cm, guide_width,
+				stroke=0, fill=1)
+
 		c.showPage()
 
 	def draw_card_page(self, c, card, colour_scheme, frame_layout):
@@ -422,7 +461,12 @@ class MedRefCards():
 if __name__ == '__main__':
 	med_ref_cards = MedRefCards()
 	med_ref_cards.generate_pdf(frame_layout='print')
-	med_ref_cards.generate_pdf(frame_layout='print-double-sided')
+	
+	colour_scheme = yaml_loader('../theme/colour-schemes/default-colour-scheme.yml')
+	for key,val in colour_scheme.items():
+		med_ref_cards.generate_pdf(frame_layout='print-double-sided', output_folder='../pdf/print-double-sided', file_name=key, no_title=True, domain_filter=[key])
+
+
 	# med_ref_cards.generate_pdf(frame_layout='no-footer')
 	# med_ref_cards.generate_pdf(frame_layout='indexed')
 	med_ref_cards.generate_pdf(frame_layout='screen')
