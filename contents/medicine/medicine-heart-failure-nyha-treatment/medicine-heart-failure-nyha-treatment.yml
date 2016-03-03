@@ -13,7 +13,7 @@ front_footer: ''
 front_toc:
   - 'NYHA - New York Heart Association Functional Classification'
 front_references:
-  - 'Vårdprogram hjärtsvikt viss.nu'
+  - 'Vardprogram hjartsvikt viss.nu'
 
 ## Back ########################
 back_header: 'Heart Failure Treatment'
@@ -22,4 +22,4 @@ back_footer: ''
 back_toc:
   - 'Heart failure treatment'
 back_references:
-  - 'Vårdprogram hjärtsvikt viss.nu'
+  - 'Vardprogram hjartsvikt viss.nu'

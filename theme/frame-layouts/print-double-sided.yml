@@ -2,9 +2,7 @@
 ## Default frame layout #############################
 #####################################################
 
-spread: true
-a4: true
-double_sided: true
+output: 'double-sided'
 footer_index: false
 
 ## Dimensions in cm #################################
