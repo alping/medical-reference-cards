@@ -1,0 +1,26 @@
+## Card ########################
+domain: 'pediatrics'
+category: 'general'
+
+modified_date: '160222'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'Vaccinations (Swe)'
+front_footer: ''
+
+front_toc:
+  - 'Vaccination programme in Sweden'
+front_references:
+  - 'Swedish Folkhälsomyndigheten'
+  - 'http://www.folkhalsomyndigheten.se/pagefiles/20477/det-svenska-vaccinationsprogrammet-allman-del-for-alla-barn-svenska-2012.pdf'
+
+## Back ########################
+back_header: 'Check-ups (Swe)'
+back_footer: ''
+
+back_toc:
+  - 'Check-ups program in Sweden'
+back_references:
+  - 'Pediatric course booklet, Pediatrics course, Karolinska Hospital, Solna, Swedens'

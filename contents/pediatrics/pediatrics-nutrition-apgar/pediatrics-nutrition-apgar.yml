@@ -1,0 +1,25 @@
+## Card ########################
+domain: 'pediatrics'
+category: 'general'
+
+modified_date: '160222'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'Nutrition'
+front_footer: ''
+
+front_toc:
+  - 'Nutritional recommendations'
+front_references:
+  - 'Pediatric course booklet, Pediatrics course, Karolinska Hospital, Solna, Sweden'
+
+## Back ########################
+back_header: 'Apgar score'
+back_footer: ''
+
+back_toc:
+  - 'Apgar score'
+back_references:
+  - 'https://www.nlm.nih.gov/medlineplus/ency/article/003402.htm'

@@ -1,0 +1,25 @@
+## Card ########################
+domain: 'Medicine'
+category: 'general'
+
+modified_date: '160217'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'NYHA'
+front_footer: ''
+
+front_toc:
+  - 'NYHA - New York Heart Association Functional Classification'
+front_references:
+  - 'Vårdprogram hjärtsvikt viss.nu'
+
+## Back ########################
+back_header: 'Heart Failure Treatment'
+back_footer: ''
+
+back_toc:
+  - 'Heart failure treatment'
+back_references:
+  - 'Vårdprogram hjärtsvikt viss.nu'

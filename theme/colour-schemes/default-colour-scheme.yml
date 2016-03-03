@@ -4,13 +4,15 @@
 
 ## Domain: [red, green, blue] (colour value: 0-1) ###
 
-endocrinology: [153, 51, 153]
-general: [40, 190, 150]
+endocrinology: [163, 90, 163]
+general: [30, 190, 170]
 laboratory: [180, 40, 102]
-medicine: [20, 180, 80]
+medicine: [70, 180, 110]
 neurology: [102, 102, 153]
+obstetrics & gynecology: [180, 102, 153]
 orthopedics: [255, 130, 54]
 pediatrics: [64, 153, 255]
+pharmacology: [200, 150, 100]
 
 anaesthesiology: [255, 67, 64]
 emergency: [0.5, 0.5, 0.5]

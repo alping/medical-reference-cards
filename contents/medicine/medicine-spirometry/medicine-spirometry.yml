@@ -1,0 +1,25 @@
+## Card ########################
+domain: 'Medicine'
+category: 'General'
+
+modified_date: '160228'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'Spirometry'
+front_footer: ''
+
+front_toc:
+  - 'Spirometry'
+front_references:
+  - 'Peter'
+
+## Back ########################
+back_header: ''
+back_footer: ''
+
+back_toc:
+  - ''
+back_references:
+  - ''

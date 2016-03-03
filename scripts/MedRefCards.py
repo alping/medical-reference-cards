@@ -1,4 +1,6 @@
-# Class file for generating and printing medical reference cards.
+#!/usr/bin/python
+
+# Class file for generating and printing medical reference cards
 # Copyright (C) 2016 Peter Alping
 #
 # This program is free software: you can redistribute it and/or modify
@@ -73,8 +75,8 @@ class MedRefCard():
 		self.card_folder = path_reg_ex.group('path')
 		self.card_fn = fn_reg_ex.group('fn')
 		
-		self.domain = card_dict['domain']
-		self.category = card_dict['category']
+		self.domain = card_dict['domain'].lower()
+		self.category = card_dict['category'].lower()
 
 		self.modified_date = card_dict['modified_date']
 		self.verified_date = card_dict['verified_date']
@@ -108,12 +110,18 @@ class MedRefDeck():
 		self.card_filter = card_filter
 		self.content_path = content_path
 		self.cards = []
+		self.domain_index = []
 
 		card_files = self.find_all_cards()
 
 		# Create a list of all MedRefCards
+		active_domain = ''
 		for card_file in card_files:
 			self.cards.append(MedRefCard(card_file))
+			if self.cards[-1].domain != active_domain:
+				self.domain_index.append(self.cards[-1].domain)
+				active_domain = self.cards[-1].domain
+
 
 		logging.info('Deck generated successfully. Number of cards: ' + str(len(self.cards)))
 
@@ -149,7 +157,7 @@ class MedRefCards():
 	def sort_deck(self, reverse=False):
 		self.med_ref_deck.sort(reverse)
 
-	def generate_pdf(self, spread=True, colour_scheme='default-colour-scheme', frame_layout='default-frame-layout', output_folder='../pdf'):
+	def generate_pdf(self, colour_scheme='default-colour-scheme', frame_layout='default-frame-layout', output_folder='../pdf'):
 		## Colour scheme check
 		colour_scheme_path = os.path.join('../theme/colour-schemes', colour_scheme + '.yml')
 		if not os.path.isfile(colour_scheme_path):
@@ -161,33 +169,35 @@ class MedRefCards():
 		if not os.path.isfile(frame_layout_path):
 			logging.warning('No frame layout: ' + frame_layout + '. Using frame layout: default.')
 			frame_layout_path = '../theme/frame-layouts/default-frame-layout.yml'
-
-		if spread:
-			output_fn = 'medical-reference-cards' + '-spread'
-		else:
-			output_fn = 'medical-reference-cards' + '-page'
-
-		output_fn = output_fn + '-' + frame_layout + '.pdf'
-
-		output_path = os.path.join(output_folder, output_fn)
-
+		
 		colour_scheme = yaml_loader(colour_scheme_path)
+		frame_layout_name = frame_layout
 		frame_layout = self.set_frame_layout(yaml_loader(frame_layout_path))
 
-		if spread:
-			canvas_size = (frame_layout['card_spread']['width']*cm, frame_layout['card_spread']['height']*cm)
-			draw_card = self.draw_card_spread
+		output_fn = 'medical-reference-cards' + '-' + frame_layout_name + '.pdf'
+		output_path = os.path.join(output_folder, output_fn)
+
+		if frame_layout['spread']:
+			if frame_layout['a4']:
+				canvas_size = (frame_layout['card_spread']['width']*cm, 2*frame_layout['card_spread']['height']*cm)
+				# draw_card = self.draw_card_spread_a4
+			else:
+				canvas_size = (frame_layout['card_spread']['width']*cm, frame_layout['card_spread']['height']*cm)
+				draw_card = self.draw_card_spread
 		else:
 			draw_size = canvas_size = (frame_layout['card']['width']*cm, frame_layout['card']['height']*cm)
 			draw_card = self.draw_card_page
 
-		c = canvas.Canvas(output_path, canvas_size)
-		active_domain = ''
+		c = canvas.Canvas(output_path, canvas_size, pageCompression = 0)
 
 		self.draw_title_page(c, canvas_size[0], canvas_size[1])
+		
+		active_domain = ''
+		domain_index = []
 		for card in self.med_ref_deck.cards:
 			if card.domain != active_domain:
 				self.add_toc_item(c, card.domain.title(), 'domain-' + card.domain, 1, True)
+				domain_index.append(card.domain)
 				active_domain = card.domain
 			draw_card(c, card, colour_scheme, frame_layout)
 
@@ -276,31 +286,59 @@ class MedRefCards():
 		
 		c.showPage()
 
-	def draw_card_face(self, c, card_face, domain, colour_scheme, frame_layout, page_nr, offset = 0):
+	def draw_card_face(self, c, card_face, domain, colour_scheme, frame_layout, face_nr, offset = 0):
 		if domain in colour_scheme:
 			colour = (colour_scheme[domain][0]/255, colour_scheme[domain][1]/255, colour_scheme[domain][2]/255)
 		else:
 			logging.warning('No colour defined for domain: ' + domain + ', in colour scheme.')
 			colour = (0.5, 0.5, 0.5)
 
+		nr_of_domains = len(self.med_ref_deck.domain_index)
+		this_domain_index = self.med_ref_deck.domain_index.index(domain)
+
 		# Colour frame
 		c.setFillColorRGB(colour[0], colour[1], colour[2])
-		c.roundRect(0 + offset, 0, frame_layout['card']['width']*cm, frame_layout['card']['height']*cm, radius=frame_layout['border']['outer_corner_radius']*cm, stroke=0, fill=1)
+		if frame_layout['footer_index']:
+			c.roundRect(0 + offset,
+						0 + frame_layout['border']['bottom']*cm * 0.4,
+						frame_layout['card']['width']*cm,
+						frame_layout['card']['height']*cm - frame_layout['border']['bottom']*cm * 0.4,
+						radius=frame_layout['border']['outer_corner_radius']*cm, stroke=0, fill=1)
+
+			if this_domain_index == 0 and face_nr == 1 or this_domain_index == nr_of_domains-1 and face_nr == 2:
+				c.rect(	0 + offset,
+						0 + frame_layout['border']['bottom']*cm * 0.4,
+						frame_layout['border']['outer_corner_radius']*cm,
+						frame_layout['border']['outer_corner_radius']*cm,
+						stroke=0, fill=1)
+
+			if this_domain_index == nr_of_domains-1 and face_nr == 1 or this_domain_index == 0 and face_nr == 2:
+				c.rect(	frame_layout['border']['left']*cm + frame_layout['content']['width']*cm + frame_layout['border']['right']*cm - frame_layout['border']['outer_corner_radius']*cm + offset,
+						0 + frame_layout['border']['bottom']*cm * 0.4,
+						frame_layout['border']['outer_corner_radius']*cm,
+						frame_layout['border']['outer_corner_radius']*cm,
+						stroke=0, fill=1)
+		else:
+			c.roundRect(0 + offset, 0, frame_layout['card']['width']*cm, frame_layout['card']['height']*cm, radius=frame_layout['border']['outer_corner_radius']*cm, stroke=0, fill=1)
 
 		# Content space
 		c.setFillColorRGB(1, 1, 1)
-		c.roundRect(frame_layout['border']['left']*cm + offset, frame_layout['border']['bottom']*cm, frame_layout['content']['width']*cm, frame_layout['content']['height']*cm, radius=frame_layout['border']['inner_corner_radius']*cm, stroke=0, fill=1)
+		c.roundRect(frame_layout['border']['left']*cm - 0*frame_layout['border']['inner_corner_radius']*cm + offset,
+					frame_layout['border']['bottom']*cm - 0*frame_layout['border']['inner_corner_radius']*cm,
+					frame_layout['content']['width']*cm + 0*frame_layout['border']['inner_corner_radius']*cm,
+					frame_layout['content']['height']*cm + 0*frame_layout['border']['inner_corner_radius']*cm,
+					radius=frame_layout['border']['inner_corner_radius']*cm, stroke=0, fill=1)
 
 		# Key ring cut-out: 0 = none, 1 = top left, 2 = top right
-		if page_nr == 1:
+		if face_nr == 1:
 			c.circle(0, frame_layout['card_spread']['height']*cm, frame_layout['key_ring']['radius']*cm, stroke=0, fill=1)
-		elif page_nr == 2:
+		elif face_nr == 2:
 			c.circle(frame_layout['card_spread']['width']*cm, frame_layout['card_spread']['height']*cm, frame_layout['key_ring']['radius']*cm, stroke=0, fill=1)
 
 		# Domain / Caetgory text
 		c.setFont('Helvetica', 10, leading = None)
 
-		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, frame_layout['card']['height']*cm - 0.47*cm, '- ' + domain.title() + ' -')
+		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, frame_layout['card']['height']*cm - 0.48*cm, '- ' + domain.title() + ' -')
 
 		# Header text
 		if len(card_face.header) < 23:
@@ -310,12 +348,26 @@ class MedRefCards():
 		else:
 			c.setFont('Helvetica-Bold', 18, leading = None)
 
+		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, frame_layout['card']['height']*cm - 1.2*cm, card_face.header)
 
-		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, frame_layout['card']['height']*cm - 1.23*cm, card_face.header)
+		# Footer
+		if frame_layout['footer_index']:
+			width = (frame_layout['border']['left']*cm + frame_layout['content']['width']*cm + frame_layout['border']['right']*cm) / nr_of_domains
+			height = frame_layout['border']['bottom']*cm - frame_layout['border']['inner_corner_radius']*cm
+			x_pos_1 = offset + this_domain_index * width
+			x_pos_2 = offset + frame_layout['border']['left']*cm + frame_layout['content']['width']*cm + frame_layout['border']['right']*cm - (this_domain_index+1) * width
+			y_pos = 0
 
-		# Footer text
-		c.setFont('Helvetica', 8, leading = None)
-		c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, 0.15*cm, frame_layout['static_text']['footer'])
+			c.setFillColorRGB(colour[0], colour[1], colour[2])
+
+			if face_nr == 1:
+				c.roundRect(x_pos_1, y_pos, width, height, radius=0.06*cm, stroke=0, fill=1)
+			if face_nr == 2:
+				c.roundRect(x_pos_2, y_pos, width, height, radius=0.06*cm, stroke=0, fill=1)
+		else:
+			c.setFillColorRGB(1, 1, 1)
+			c.setFont('Helvetica', 7, leading = None)
+			c.drawCentredString(frame_layout['card']['width']*cm/2 + offset, 0.13*cm, frame_layout['static_text']['footer'])
 
 		# Include contents
 		if os.path.isfile(card_face.content_path):
@@ -329,6 +381,8 @@ class MedRefCards():
 
 if __name__ == '__main__':
 	med_ref_cards = MedRefCards()
-	med_ref_cards.generate_deck()
-	med_ref_cards.generate_pdf(spread=True, frame_layout='print')
-	med_ref_cards.generate_pdf(spread=False, frame_layout='screen')
+	med_ref_cards.generate_pdf(frame_layout='print')
+	# med_ref_cards.generate_pdf(frame_layout='print-a4-double-sided')
+	med_ref_cards.generate_pdf(frame_layout='no-footer')
+	# med_ref_cards.generate_pdf(frame_layout='indexed')
+	med_ref_cards.generate_pdf(frame_layout='screen')
