@@ -278,7 +278,7 @@ class MedRefCards():
 		c.showPage()
 
 	def draw_double_sided(self, c, cards_for_page, colour_scheme, frame_layout):
-		guide_width = 0.02*cm
+		guide_width = 0.01*cm
 
 		for add in range(len(cards_for_page)+1, 5):
 			cards_for_page.append(None)
