@@ -1,6 +1,6 @@
 ## Card ########################
-domain: 'pediatrics'
-category: 'general'
+domain: 'Paediatrics'
+category: 'Basic'
 
 modified_date: '160222'
 verified_date: ''
@@ -13,7 +13,7 @@ front_footer: ''
 front_toc:
   - 'Nutritional recommendations'
 front_references:
-  - 'Pediatric course booklet, Pediatrics course, Karolinska Hospital, Solna, Sweden'
+  - 'Paediatric course booklet, Paediatrics course, Karolinska Hospital, Solna, Sweden'
 
 ## Back ########################
 back_header: 'Apgar score'

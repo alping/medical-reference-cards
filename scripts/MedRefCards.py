@@ -48,6 +48,8 @@ def yaml_dump(filepath, data):
 		yaml.dump(data, file_descriptor)
 		file_descriptor.close()
 
+def xtitle(string):
+		return string.title().replace('And', 'and')
 
 class MedRefCardFace():
 	"""Medical Reference Card Face"""
@@ -157,7 +159,11 @@ class MedRefCards():
 	def sort_deck(self, reverse=False):
 		self.med_ref_deck.sort(reverse)
 
-	def generate_pdf(self, colour_scheme='default-colour-scheme', frame_layout='default-frame-layout', output_folder='../pdf', file_name=None, domain_filter=None, invert_filter=False, no_title=False):
+	def generate_pdf(self, colour_scheme='default-colour-scheme', frame_layout='default-frame-layout',
+					 output_folder='../pdf', file_name=None,
+					 domain_filter=None, df_invert=False,
+					 category_filter=None, cf_invert=False,
+					 no_title=False):
 		## Colour scheme check
 		colour_scheme_path = os.path.join('../theme/colour-schemes', colour_scheme + '.yml')
 		if not os.path.isfile(colour_scheme_path):
@@ -202,22 +208,24 @@ class MedRefCards():
 		if frame_layout['output'] == 'double-sided':
 			cards_for_page = []
 			for card in self.med_ref_deck.cards:
-				if 	domain_filter is None or not invert_filter and card.domain in domain_filter or invert_filter and card.domain not in domain_filter:
-					cards_for_page.append(card)
-					if len(cards_for_page) == 4:
-						draw_card(c, cards_for_page, colour_scheme, frame_layout)
-						cards_for_page = []
+				if 	category_filter is None or not cf_invert and card.category.lower() in category_filter or cf_invert and card.category.lower() not in category_filter:
+					if 	domain_filter is None or not df_invert and card.domain.lower() in domain_filter or df_invert and card.domain.lower() not in domain_filter:
+						cards_for_page.append(card)
+						if len(cards_for_page) == 4:
+							draw_card(c, cards_for_page, colour_scheme, frame_layout)
+							cards_for_page = []
 			if len(cards_for_page) > 0:
 				draw_card(c, cards_for_page, colour_scheme, frame_layout)
 
 		else:
 			for card in self.med_ref_deck.cards:
-				if 	domain_filter is None or not invert_filter and card.domain in domain_filter or invert_filter and card.domain not in domain_filter:
-					if card.domain != active_domain:
-						self.add_toc_item(c, card.domain.title(), 'domain-' + card.domain, 1, True)
-						domain_index.append(card.domain)
-						active_domain = card.domain
-					draw_card(c, card, colour_scheme, frame_layout)
+				if 	category_filter is None or not cf_invert and card.category.lower() in category_filter or cf_invert and card.category.lower() not in category_filter:
+					if 	domain_filter is None or not df_invert and card.domain.lower() in domain_filter or df_invert and card.domain.lower() not in domain_filter:
+						if card.domain != active_domain:
+							self.add_toc_item(c, xtitle(card.domain), 'domain-' + card.domain, 1, True)
+							domain_index.append(card.domain)
+							active_domain = card.domain
+						draw_card(c, card, colour_scheme, frame_layout)
 
 		c.save()
 
@@ -417,7 +425,7 @@ class MedRefCards():
 		# Domain / Caetgory text
 		c.setFont('Helvetica', 10, leading = None)
 
-		c.drawCentredString(frame_layout['card']['width']*cm/2 + x_offset, frame_layout['card']['height']*cm - 0.48*cm + y_offset, '- ' + domain.title() + ' -')
+		c.drawCentredString(frame_layout['card']['width']*cm/2 + x_offset, frame_layout['card']['height']*cm - 0.48*cm + y_offset, '- ' + xtitle(domain) + ' -')
 
 		# Header text
 		if len(card_face.header) < 23:
@@ -462,10 +470,10 @@ if __name__ == '__main__':
 	med_ref_cards = MedRefCards()
 	med_ref_cards.generate_pdf(frame_layout='print')
 	
+	med_ref_cards.generate_pdf(frame_layout='print-double-sided', output_folder='../pdf/print-double-sided', category_filter=['basic'], no_title=True)
 	colour_scheme = yaml_loader('../theme/colour-schemes/default-colour-scheme.yml')
 	for key,val in colour_scheme.items():
-		med_ref_cards.generate_pdf(frame_layout='print-double-sided', output_folder='../pdf/print-double-sided', file_name=key, no_title=True, domain_filter=[key])
-
+		med_ref_cards.generate_pdf(frame_layout='print-double-sided', output_folder='../pdf/print-double-sided', file_name=key, domain_filter=[key], category_filter=['basic'], no_title=True)
 
 	# med_ref_cards.generate_pdf(frame_layout='no-footer')
 	# med_ref_cards.generate_pdf(frame_layout='indexed')
