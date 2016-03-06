@@ -2,24 +2,25 @@
 domain: 'Medicine'
 category: 'Basic'
 
-modified_date: '160218'
+modified_date: '160228'
 verified_date: ''
 verified_by: ''
 
 ## Front #######################
-front_header: 'CHA2DS2VAS'
+front_header: 'Atrial Fibrillation'
 front_footer: ''
 
 front_toc:
-  - 'CHA2DS2VAS'
+  - 'Types of AF'
+  - 'Treatment of AF'
 front_references:
-  - 'Behandlingsprogram Akut internmedicin Janusinfo 2015. Fass.'
+  - 'Kajsa'
 
 ## Back ########################
-back_header: 'HAS-BLED'
+back_header: 'CHA2DS2VAS'
 back_footer: ''
 
 back_toc:
-  - 'HAS-BLED'
+  - 'CHA2DS2VAS'
 back_references:
-  - 'Behandlingsprogram Akut internmedicin Janusinfo 2015.'
+  - 'Behandlingsprogram Akut internmedicin Janusinfo 2015. Fass.'

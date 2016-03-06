@@ -2,19 +2,18 @@
 domain: 'Medicine'
 category: 'Basic'
 
-modified_date: '160228'
+modified_date: '160218'
 verified_date: ''
 verified_by: ''
 
 ## Front #######################
-front_header: 'Atrial Fibrillation'
+front_header: 'HAS-BLED'
 front_footer: ''
 
 front_toc:
-  - 'Types of AF'
-  - 'Treatment of AF'
+  - 'HAS-BLED'
 front_references:
-  - 'Kajsa'
+  - 'Behandlingsprogram Akut internmedicin Janusinfo 2015.'
 
 ## Back ########################
 back_header: ''
