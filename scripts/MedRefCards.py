@@ -76,7 +76,7 @@ class MedRefCard():
 
 		self.card_folder = path_reg_ex.group('path')
 		self.card_fn = fn_reg_ex.group('fn')
-		
+
 		self.domain = card_dict['domain'].lower()
 		self.category = card_dict['category'].lower()
 
@@ -108,9 +108,10 @@ class MedRefCard():
 class MedRefDeck():
 	"""Medical Reference Card Deck"""
 
-	def __init__(self, card_filter, content_path):
+	def __init__(self, localisation, card_filter, content_path):
+		self.localisation = localisation
 		self.card_filter = card_filter
-		self.content_path = content_path
+		self.content_path = os.path.join(content_path, localisation)
 		self.cards = []
 		self.domain_index = []
 
@@ -124,11 +125,10 @@ class MedRefDeck():
 				self.domain_index.append(self.cards[-1].domain)
 				active_domain = self.cards[-1].domain
 
-
 		logging.info('Deck generated successfully. Number of cards: ' + str(len(self.cards)))
 
 	def __repr__(self):
-		return repr((self.card_filter, self.content_path, self.cards))
+		return repr((self.localisation, self.card_filter, self.content_path, self.cards))
 
 	def find_all_cards(self):
 		pattern = '*.yml'
@@ -146,15 +146,15 @@ class MedRefDeck():
 
 class MedRefCards():
 	"""Class for generating and printing medical reference cards"""
-	def __init__(self, card_filter='all', content_path='../contents'):
-		self.med_ref_deck = self.generate_deck(card_filter, content_path)
+	def __init__(self, localisation='eng', card_filter='all', content_path='../contents'):
+		self.med_ref_deck = self.generate_deck(localisation, card_filter, content_path)
 		self.sort_deck()
-		
+
 	def __repr__(self):
 		return repr((self.med_ref_deck))
 
-	def generate_deck(self, card_filter='all', content_path='../contents'):
-		return MedRefDeck(card_filter, content_path)
+	def generate_deck(self, localisation='eng', card_filter='all', content_path='../contents'):
+		return MedRefDeck(localisation, card_filter, content_path)
 
 	def sort_deck(self, reverse=False):
 		self.med_ref_deck.sort(reverse)
@@ -175,7 +175,7 @@ class MedRefCards():
 		if not os.path.isfile(frame_layout_path):
 			logging.warning('No frame layout: ' + frame_layout + '. Using frame layout: default.')
 			frame_layout_path = '../theme/frame-layouts/default-frame-layout.yml'
-		
+
 		colour_scheme = yaml_loader(colour_scheme_path)
 		frame_layout_name = frame_layout
 		frame_layout = self.set_frame_layout(yaml_loader(frame_layout_path))
@@ -183,9 +183,10 @@ class MedRefCards():
 		if file_name is not None:
 			output_fn = file_name + '.pdf'
 		else:
-			output_fn = 'medical-reference-cards' + '-' + frame_layout_name + '.pdf'
+			output_fn = 'medical-reference-cards' + '-' + frame_layout_name + '-' + self.med_ref_deck.localisation + '.pdf'
 
-		output_path = os.path.join(output_folder, output_fn)
+		output_path = os.path.join(output_folder, self.med_ref_deck.localisation, output_fn)
+
 
 		if frame_layout['output'] == 'spread':
 			canvas_size = (frame_layout['card_spread']['width']*cm, frame_layout['card_spread']['height']*cm)
@@ -201,7 +202,7 @@ class MedRefCards():
 
 		if not no_title:
 			self.draw_title_page(c, canvas_size[0], canvas_size[1])
-		
+
 		active_domain = ''
 		domain_index = []
 
@@ -268,7 +269,7 @@ class MedRefCards():
 		self.draw_card_face(c, card.front_face, card.domain, colour_scheme, frame_layout, 1)
 		self.draw_card_face(c, card.back_face, card.domain, colour_scheme, frame_layout, 2, frame_layout['card']['width']*cm)
 		self.add_toc_item(c, card.front_face.header + ' / ' + card.back_face.header, card.front_face.header + '-' + card.back_face.header, 2, True)
-		
+
 		item_nr = 0
 
 		self.add_toc_item(c, 'Front Face', card.front_face.header + '-front', 3)
@@ -306,7 +307,7 @@ class MedRefCards():
 				self.draw_card_face(c, cards_for_page[card_number-1].front_face, cards_for_page[card_number-1].domain, colour_scheme, frame_layout, 1, x_offset, y_offset)
 
 		c.setFillColorRGB(1, 1, 1)
-		
+
 		c.rect(	frame_layout['card']['width']*cm - guide_width/2, 0,
 				guide_width, 2 * frame_layout['card']['height']*cm,
 				stroke=0, fill=1)
@@ -330,9 +331,9 @@ class MedRefCards():
 
 			if cards_for_page[card_number-1] is not None:
 				self.draw_card_face(c, cards_for_page[card_number-1].back_face, cards_for_page[card_number-1].domain, colour_scheme, frame_layout, 2, x_offset, y_offset)
-		
+
 		c.setFillColorRGB(1, 1, 1)
-		
+
 		c.rect(	frame_layout['card']['width']*cm - guide_width/2, 0,
 				guide_width, 2 * frame_layout['card']['height']*cm,
 				stroke=0, fill=1)
@@ -348,26 +349,26 @@ class MedRefCards():
 
 		self.draw_card_face(c, card.front_face, card.domain, colour_scheme, frame_layout, 1)
 		self.add_toc_item(c, card.front_face.header, card.front_face.header, 3)
-		
+
 		item_nr = 0
-		
+
 		for title in card.front_face.toc:
 			if title != '':
 				self.add_toc_item(c, title, card.front_face.header + '-' + str(item_nr), 4)
 				item_nr += 1
-		
+
 		c.showPage()
 
 		self.draw_card_face(c, card.back_face, card.domain, colour_scheme, frame_layout, 2)
 		self.add_toc_item(c, card.back_face.header, card.back_face.header, 3)
-		
+
 		item_nr = 0
-		
+
 		for title in card.back_face.toc:
 			if title != '':
 				self.add_toc_item(c, title, card.back_face.header + '-' + str(item_nr), 4)
 				item_nr += 1
-		
+
 		c.showPage()
 
 	def draw_card_face(self, c, card_face, domain, colour_scheme, frame_layout, face_nr, x_offset = 0, y_offset = 0):
@@ -454,7 +455,7 @@ class MedRefCards():
 		else:
 			c.setFillColorRGB(1, 1, 1)
 			c.setFont('Helvetica', 7, leading = None)
-			c.drawCentredString(frame_layout['card']['width']*cm/2 + x_offset, 0.13*cm + y_offset, frame_layout['static_text']['footer'])
+			c.drawCentredString(frame_layout['card']['width']*cm/2 + x_offset, 0.14*cm + y_offset, frame_layout['static_text']['footer'])
 
 		# Include contents
 		if os.path.isfile(card_face.content_path):
@@ -469,7 +470,7 @@ class MedRefCards():
 if __name__ == '__main__':
 	med_ref_cards = MedRefCards()
 	med_ref_cards.generate_pdf(frame_layout='print')
-	
+
 	med_ref_cards.generate_pdf(frame_layout='print-double-sided', output_folder='../pdf/print-double-sided', category_filter=['basic'], no_title=True)
 	colour_scheme = yaml_loader('../theme/colour-schemes/default-colour-scheme.yml')
 	for key,val in colour_scheme.items():

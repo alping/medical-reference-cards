@@ -1,0 +1,27 @@
+## Card ########################
+domain: 'Laboratory'
+category: 'Basic'
+
+modified_date: '160722'
+verified_date: ''
+verified_by: ''
+
+## Front #######################
+front_header: 'Labreferens'
+front_footer: ''
+
+front_toc:
+  - 'Labreferens'
+front_references:
+  - 'NORIS'
+  - 'http://www.equalis.se/sv/vaar-verksamhet/projekt/nordiska-referensintervallprojektet'
+
+## Back ########################
+back_header: 'Labreferens'
+back_footer: ''
+
+back_toc:
+  - 'Labreferens'
+back_references:
+  - 'NORIS'
+  - 'http://www.equalis.se/sv/vaar-verksamhet/projekt/nordiska-referensintervallprojektet'

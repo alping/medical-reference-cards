@@ -19,7 +19,7 @@
 # Peter Alping
 # peter@alping.se
 
-import sys, getopt, logging
+import sys, argparse, getopt, logging
 import MedRefCards
 
 def main(argv):
@@ -27,50 +27,29 @@ def main(argv):
 	colour_scheme = 'default-colour-scheme'
 	frame_layout = 'default-frame-layout'
 	card_filter = 'all'
+	localisation  = 'eng'
 	content_path = '../contents'
 	output_path = '../pdf'
 
-	options = 'ncfhl'
-	long_options = ['name',
-					'colour-scheme',
-					'frame-layout',
-					'card-filter',
-					'content-path',
-					'output-path',
-					'help',
-					'licence']
 
-	try:
-		opts, args = getopt.getopt(argv, options, long_options)
-	except getopt.GetoptError:
-		logging.error('Invalid arguments')
-		sys.exit(2)
+	parser = argparse.ArgumentParser(description='Create medical reference cards.')
+	parser.add_argument('-n',	'--name',			action='store',			dest='name',			default='',							help='-not in use-')
+	parser.add_argument('-c',	'--colour-scheme',	action='store',			dest='colour_scheme',	default='default-colour-scheme',	help='colour scheme')
+	parser.add_argument('-f',	'--frame-layout',	action='store',			dest='frame_layout',	default='default-frame-layout',		help='frame layout')
+	parser.add_argument('-l',	'--localisation',	action='store',			dest='localisation',	default='eng',						help='localisation')
+	parser.add_argument(		'--card-filter',	action='store',			dest='card_filter',		default='all', 						help='card filter')
+	parser.add_argument(		'--content-path',	action='store',			dest='content_path',	default='../contents',				help='content path')
+	parser.add_argument(		'--output-path',	action='store',			dest='output_path',		default='../pdf',					help='output path')
+	parser.add_argument(		'--licence',		action='store_true',	dest='licence',			default=False,						help='show licence')
 
-	print(opts)
+	args = parser.parse_args()
 
-	for opt, arg in opts:
-		if opt in ('-n', '--name'):
-			name = arg
-		elif opt in ('-c', '--colour-scheme'):
-			colour_scheme = arg
-		elif opt in ('-f', '--frame-layout'):
-			frame_layout = arg
-		elif opt in ('--card-filter'):
-			card_filter = arg
-		elif opt in ('--content-path'):
-			content_path = arg
-		elif opt in ('--output-path'):
-			output_path = arg
-		elif opt in ('-h', '--help'):
-			print('Short options: ' + options)
-			print('Long options: ' + str(long_options))
-			return
-		elif opt in ('-l', '--licence'):
-			print('GNU General Public License (http://www.gnu.org/licenses/)')
-			return
+	if args.licence:
+		print('GNU General Public License (http://www.gnu.org/licenses/)')
+		return
 
-	med_ref_cards = MedRefCards.MedRefCards(card_filter, content_path)
-	med_ref_cards.generate_pdf(colour_scheme, frame_layout, output_path)
+	med_ref_cards = MedRefCards.MedRefCards(args.localisation, args.card_filter, args.content_path)
+	med_ref_cards.generate_pdf(args.colour_scheme, args.frame_layout, args.output_path)
 
 if __name__ == "__main__":
 	main(sys.argv[1:])
