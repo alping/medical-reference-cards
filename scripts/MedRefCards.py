@@ -468,14 +468,15 @@ class MedRefCards():
 
 
 if __name__ == '__main__':
-	med_ref_cards = MedRefCards()
-	med_ref_cards.generate_pdf(frame_layout='print')
+	pass;
+	# med_ref_cards = MedRefCards()
+	# med_ref_cards.generate_pdf(frame_layout='print')
 
-	med_ref_cards.generate_pdf(frame_layout='print-double-sided', output_folder='../pdf/print-double-sided', category_filter=['basic'], no_title=True)
-	colour_scheme = yaml_loader('../theme/colour-schemes/default-colour-scheme.yml')
-	for key,val in colour_scheme.items():
-		med_ref_cards.generate_pdf(frame_layout='print-double-sided', output_folder='../pdf/print-double-sided', file_name=key, domain_filter=[key], category_filter=['basic'], no_title=True)
+	# med_ref_cards.generate_pdf(frame_layout='print-double-sided', output_folder='../pdf/print-double-sided', category_filter=['basic'], no_title=True)
+	# colour_scheme = yaml_loader('../theme/colour-schemes/default-colour-scheme.yml')
+	# for key,val in colour_scheme.items():
+	# 	med_ref_cards.generate_pdf(frame_layout='print-double-sided', output_folder='../pdf/print-double-sided', file_name=key, domain_filter=[key], category_filter=['basic'], no_title=True)
 
-	# med_ref_cards.generate_pdf(frame_layout='no-footer')
-	# med_ref_cards.generate_pdf(frame_layout='indexed')
-	med_ref_cards.generate_pdf(frame_layout='screen')
+	# # med_ref_cards.generate_pdf(frame_layout='no-footer')
+	# # med_ref_cards.generate_pdf(frame_layout='indexed')
+	# med_ref_cards.generate_pdf(frame_layout='screen')
